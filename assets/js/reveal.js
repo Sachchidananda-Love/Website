@@ -1,6 +1,8 @@
-var element = document.getElementById(logo2);
-element.src = "assets/img/Videos/Logo.gif";  
-element.src = "assets/img/Videos/Logo.gif"+new Date().getTime();
+const element = document.getElementById("logo2");
+
+if (element) {
+  element.src = `assets/img/Videos/Logo.gif?v=${Date.now()}`;
+}
 
 
 
