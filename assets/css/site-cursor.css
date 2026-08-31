@@ -1,0 +1,23 @@
+html,
+html body,
+html body * {
+  cursor: none !important;
+}
+
+.site-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  display: block;
+  width: 32px;
+  height: auto;
+  max-width: none;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.site-cursor--visible {
+  opacity: 1;
+}

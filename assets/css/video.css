@@ -1,0 +1,4 @@
+@import url("paintings.css");
+
+.painting-card__preview video { background: #f8f6f2; }
+.painting-dialog__stage video { background: #f8f6f2; }

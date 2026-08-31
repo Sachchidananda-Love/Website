@@ -1,0 +1,84 @@
+html.site-loader-active,
+html.site-loader-active body {
+  overflow: hidden;
+}
+
+.site-loader {
+  --loader-size: clamp(72px, 10vw, 108px);
+  --loader-depth: calc(var(--loader-size) / 2);
+  position: fixed;
+  z-index: 2147483647;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  opacity: 1;
+}
+
+.site-loader::before {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  content: '';
+  background: #f8f6f2;
+}
+
+.site-loader[hidden] {
+  display: none;
+}
+
+.site-loader.is-hiding {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.site-loader__scene,
+.site-loader__cube {
+  width: var(--loader-size);
+  height: var(--loader-size);
+  transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+}
+
+.site-loader__scene {
+  perspective: 700px;
+}
+
+.site-loader__cube {
+  position: relative;
+  will-change: transform;
+}
+
+.site-loader__face {
+  position: absolute;
+  /* A half-pixel overlap prevents anti-aliased cracks between 3D planes. */
+  inset: -.5px;
+  overflow: hidden;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* White parts of the supplied MP4s blend into the page instead of forming tiles. */
+  background: transparent;
+}
+
+.site-loader__face video {
+  position: absolute;
+  inset: -10px;
+  display: block;
+  width: calc(100% + 20px);
+  height: calc(100% + 20px);
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  transform: translateZ(0);
+}
+
+.site-loader__face--front { transform: translateZ(var(--loader-depth)); }
+.site-loader__face--back { transform: rotateY(180deg) translateZ(var(--loader-depth)); }
+.site-loader__face--right { transform: rotateY(90deg) translateZ(var(--loader-depth)); }
+.site-loader__face--left { transform: rotateY(-90deg) translateZ(var(--loader-depth)); }
+.site-loader__face--top { transform: rotateX(90deg) translateZ(var(--loader-depth)); }
+.site-loader__face--bottom { transform: rotateX(-90deg) translateZ(var(--loader-depth)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .site-loader__cube { transform: rotateX(-8deg) rotateY(22deg); }
+  .site-loader { transition: none; }
+}

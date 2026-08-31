@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f6f2">
+    <title>Graphic Design — Calem Anderson-Barwin</title>
+    <link rel="stylesheet" href="assets/css/graphic-design.css">
+    <link rel="stylesheet" href="assets/css/site-loader.css">
+</head>
+<body>
+    <script src="assets/js/site-loader.js"></script>
+    <header class="paintings-header graphic-header">
+        <a class="paintings-back" href="index.html">back</a>
+        <p class="paintings-kicker">Calem Anderson-Barwin</p>
+        <h1>Graphic Design</h1>
+    </header>
+    <main>
+        <section class="graphic-section" data-graphic-section="general"><h2>Selected work</h2><div class="paintings-grid" data-graphic-grid="general"></div></section>
+        <section class="graphic-section" data-graphic-section="thsco"><h2>The Hot Sauce Co.</h2><div class="paintings-grid" data-graphic-grid="thsco"></div></section>
+        <section class="graphic-section graphic-section--palmier" data-graphic-section="palmier">
+            <h2>Palmier</h2>
+            <div class="palmier-project">
+                <div class="palmier-project__side" data-palmier-side="left"></div>
+                <div class="palmier-project__frame"><iframe src="assets/projects/Menus-2%20Palmier%20Hosted/index.html" title="Palmier website preview" loading="lazy"></iframe></div>
+                <div class="palmier-project__side" data-palmier-side="right"></div>
+            </div>
+            <div class="palmier-menus" data-palmier-menus aria-label="Palmier menu designs"></div>
+        </section>
+    </main>
+    <template data-graphic-template><article class="painting-card"><div class="painting-card__media"><div class="painting-card__preview"></div><button class="painting-card__fullscreen" type="button" aria-label="Open fullscreen"><img src="assets/img/1x/fullscreen.png" alt=""></button></div><div class="painting-card__body"><h2 class="painting-card__title"></h2></div></article></template>
+    <dialog class="painting-dialog" data-graphic-dialog><button class="painting-dialog__close" type="button" aria-label="Close viewer">×</button><div class="painting-dialog__content" data-graphic-dialog-content></div></dialog>
+    <script src="assets/js/infinite-gallery-manifest.js"></script>
+    <script src="assets/js/graphic-design.js"></script>
+    <script src="assets/js/site-cursor.js"></script>
+</body>
+</html>

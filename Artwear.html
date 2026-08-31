@@ -15,8 +15,10 @@
     <link rel="stylesheet" href="assets/css/Simple-Slider.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/lightbox.css">
+    <link rel="stylesheet" href="assets/css/site-loader.css">
 </head>
 <body style="background: rgb(254,254,254);">
+    <script src="assets/js/site-loader.js"></script>
     <header style="margin-bottom: 93px;">
         <div class="navigation">
             <input type="checkbox" class="navigation_checkbox" id="navi-toggle">
@@ -142,8 +144,8 @@
                         </div>
                         <img src="assets/img/1x/zoomout.png" class="zoom5" alt="zoomout">
                         <div class="swiper-pagination" style="--bs-primary: #212529;--bs-primary-rgb: #212529;"></div>
-                        <div class="swiper-button-prev" style="background: url(&quot;assets/img/leftarrow.png&quot;) center no-repeat;color: transparent;"></div>
-                        <div class="swiper-button-next" style="color: transparent;background: url(&quot;assets/img/rightarrow.png&quot;) no-repeat;"></div>
+                        <div class="swiper-button-prev" style="background: url(&quot;assets/img/leftarrow.png&quot;) center / contain no-repeat;color: transparent;"></div>
+                        <div class="swiper-button-next" style="color: transparent;background: url(&quot;assets/img/rightarrow.png&quot;) center / contain no-repeat;"></div>
                     </div>
                 </div>
             </div>
@@ -350,6 +352,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/6.4.8/swiper-bundle.min.js"></script>
     <script src="assets/js/Simple-Slider.js"></script>
 
+    <script src="assets/js/site-cursor.js"></script>
 </body>
 
 </html>

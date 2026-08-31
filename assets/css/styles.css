@@ -1,3 +1,5 @@
+@import url("site-cursor.css");
+
 * {
   margin: 0;
   padding: 0;
@@ -7,8 +9,304 @@
 }
 
 html {
-  cursor: url('../../assets/img/cursor/cursor_1.png'),auto;
+  cursor: url('../../assets/img/cursor/cursor_1.png') 32 32, auto;
   font-size: 10px;
+}
+
+body,
+body button,
+body input,
+body select,
+body textarea {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+/* Legacy pages contain inline Better font declarations; keep their copy in
+   the same Helvetica treatment as the paintings pages. */
+body [style*="font-family"] {
+  font-family: Helvetica, Arial, sans-serif !important;
+}
+
+.title-page-document,
+.title-page,
+.title-page * {
+  cursor: none !important;
+}
+
+.title-page::after {
+  content: "";
+  position: fixed;
+  z-index: 9000;
+  inset: 0;
+  background: #fefefe;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 310ms ease;
+}
+
+.title-page.is-opening-gallery::after {
+  opacity: 1;
+}
+
+.site-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+  width: 32px;
+  height: auto;
+  max-width: none;
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.site-cursor--visible {
+  opacity: 1;
+}
+
+.portfolio-cube {
+  --cube-size: 230px;
+  --cube-depth: 115px;
+  --cube-glow-primary: hsl(195 74% 65% / 0.46);
+  --cube-glow-secondary: hsl(310 70% 67% / 0.42);
+  --cube-glow-tertiary: hsl(52 76% 66% / 0.4);
+  --cube-float-amount: 8px;
+  --cube-float-low: 3.6px;
+  --cube-float-high: -4.4px;
+  --cube-float-duration: 5.8s;
+  position: fixed;
+  top: 50%;
+  left: clamp(80px, 18vw, 350px);
+  z-index: 2;
+  width: var(--cube-size);
+  height: calc(var(--cube-size) + 42px);
+  pointer-events: auto;
+  transform: translateY(-50%);
+  perspective: 900px;
+  text-decoration: none;
+  transition: transform 310ms cubic-bezier(0.22, 0.7, 0.2, 1), opacity 230ms ease 70ms;
+}
+
+.portfolio-cube:focus-visible {
+  outline: 1px solid #222;
+  outline-offset: 16px;
+}
+
+.title-page.is-opening-gallery .portfolio-cube {
+  z-index: 9001;
+  opacity: 0;
+  transform: translateY(-50%) scale(1.25);
+}
+
+.portfolio-cube__glow {
+  position: absolute;
+  z-index: 0;
+  top: -32%;
+  left: -32%;
+  width: 164%;
+  height: 164%;
+  border-radius: 50%;
+  pointer-events: none;
+  background: var(--cube-glow-spectrum,
+    radial-gradient(ellipse at center, transparent 24%, var(--cube-glow-primary) 61%, transparent 88%),
+    radial-gradient(ellipse at 22% 28%, var(--cube-glow-primary) 0%, transparent 62%),
+    radial-gradient(ellipse at 78% 28%, var(--cube-glow-secondary) 0%, transparent 62%),
+    radial-gradient(ellipse at 52% 82%, var(--cube-glow-tertiary) 0%, transparent 64%));
+  filter: blur(38px);
+  opacity: 0.86;
+  transform: translateZ(0);
+  will-change: background;
+}
+
+.portfolio-cube__float {
+  position: relative;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  animation: portfolio-cube-float var(--cube-float-duration) ease-in-out infinite;
+  transition: top 150ms ease-out;
+}
+
+.portfolio-cube:hover .portfolio-cube__float {
+  top: 20px;
+}
+
+.portfolio-cube__scene,
+.portfolio-cube__object {
+  width: var(--cube-size);
+  height: var(--cube-size);
+  transform-style: preserve-3d;
+}
+
+.portfolio-cube__object {
+  position: relative;
+  transform: rotateX(-8deg) rotateY(22deg);
+  will-change: transform;
+}
+
+.portfolio-cube__face {
+  position: absolute;
+  inset: 0;
+  width: var(--cube-size);
+  height: var(--cube-size);
+  overflow: hidden;
+  backface-visibility: hidden;
+  background: #fff;
+}
+
+.portfolio-cube__face img,
+.portfolio-cube__face video {
+  position: absolute;
+  inset: -20px;
+  width: calc(100% + 40px);
+  height: calc(100% + 40px);
+  opacity: 0;
+  object-fit: cover;
+  object-position: center;
+  transform: none;
+  transition: none;
+}
+
+.portfolio-cube__face img.is-visible,
+.portfolio-cube__face video.is-visible {
+  opacity: 1;
+}
+
+/* This recording is intentionally shown in full rather than cropped to a face. */
+.portfolio-cube__face video.is-uncropped {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.portfolio-cube--instant .portfolio-cube__face img,
+.portfolio-cube--instant .portfolio-cube__face video {
+  transition: none;
+}
+
+.portfolio-cube__face--front { transform: translateZ(var(--cube-depth)); }
+.portfolio-cube__face--back { transform: rotateY(180deg) translateZ(var(--cube-depth)); }
+.portfolio-cube__face--right { transform: rotateY(90deg) translateZ(var(--cube-depth)); }
+.portfolio-cube__face--left { transform: rotateY(-90deg) translateZ(var(--cube-depth)); }
+.portfolio-cube__face--top { transform: rotateX(90deg) translateZ(var(--cube-depth)); }
+.portfolio-cube__face--bottom { transform: rotateX(-90deg) translateZ(var(--cube-depth)); }
+
+.portfolio-cube__shadow {
+  position: absolute;
+  top: calc(var(--cube-size) + 104px);
+  left: calc(50% + 6px);
+  width: 108.75%;
+  height: 69px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 48% 50%, rgba(20, 20, 20, 0.65) 0%, rgba(35, 35, 35, 0.48) 32%, rgba(65, 65, 65, 0.2) 58%, transparent 80%);
+  filter: blur(24px);
+  opacity: 1;
+  transform: translateX(-50%);
+  will-change: transform, opacity, filter;
+  animation: portfolio-cube-cast-shadow var(--cube-float-duration) ease-in-out infinite;
+}
+
+.portfolio-cube__float--reduced-motion,
+.portfolio-cube__float--reduced-motion + .portfolio-cube__shadow {
+  animation: none;
+}
+
+@keyframes portfolio-cube-float {
+  0%, 100% { transform: translateY(var(--cube-float-low)); }
+  50% { transform: translateY(var(--cube-float-high)); }
+}
+
+@keyframes portfolio-cube-cast-shadow {
+  /* Cube is closest to the ground: tighter, darker and less diffuse. */
+  0%, 100% {
+    filter: blur(16px);
+    opacity: 1;
+    transform: translateX(-50%) scale(0.96);
+  }
+  /* Cube is highest: wider, softer and lighter, but stays on the ground plane. */
+  50% {
+    filter: blur(20px);
+    opacity: 0.9;
+    transform: translateX(-50%) scale(1.02);
+  }
+}
+
+@media (max-width: 900px) {
+  .portfolio-cube {
+    left: 8vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .title-page {
+    min-height: 100svh;
+    overflow-x: hidden;
+  }
+
+  .title-page-document {
+    overflow-x: hidden;
+  }
+
+  .portfolio-cube {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    display: block;
+    /* The extra height is deliberate: it reserves a landing area for the
+       shadow before the navigation begins. */
+    height: calc(var(--cube-size) + var(--cube-shadow-reserve));
+    margin: max(216px, calc(env(safe-area-inset-top) + 96px)) auto 10pt;
+    transform: none;
+  }
+
+  .portfolio-cube__shadow {
+    display: block;
+    top: calc(var(--cube-size) + var(--cube-shadow-offset));
+    width: 112%;
+    height: auto;
+    aspect-ratio: 4 / 1;
+    filter: blur(var(--cube-shadow-blur));
+  }
+
+  .portfolio-cube__glow {
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .title-page.is-opening-gallery .portfolio-cube {
+    transform: scale(1.25);
+  }
+
+  .title-page > .container {
+    width: 100%;
+    max-width: none;
+    padding: 0 6vw 38px;
+  }
+
+  .title-page > .container > .row > .col {
+    padding: 0;
+  }
+
+  .navigation_list2 {
+    position: static;
+    width: 100%;
+    transform: none;
+    align-items: flex-end;
+    gap: 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title-page::after,
+  .portfolio-cube,
+  .portfolio-cube__float {
+    transition: none;
+  }
 }
 
 a{
@@ -38,7 +336,7 @@ a:hover{
   z-index: 20;
   box-shadow: 0 1rem 3rem rgba(black, .1);
   text-align: center;
-  cursor: url('../../assets/img/cursor/cursorhover_1.png'),auto;
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, auto;
 }
 
 .navigation_background {
@@ -68,14 +366,46 @@ a:hover{
 
 .navigation_list2 {
   position: absolute;
-  
   top: 50%;
-  left: 40%;
-  transform: translate(-50%, -50%);
+  right: 8vw;
+  transform: translateY(-50%);
   list-style-type: none;
   text-align: right;
-  width: 100%;
+  width: auto;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 16px;
 }
+
+.title-navigation-item {
+  animation: fade-in-bottom ease 0.5s forwards;
+}
+
+.title-navigation-link {
+  display: block;
+  line-height: 0;
+  padding: 5pt;
+  margin: -5pt;
+}
+
+.title-navigation-link img {
+  display: block;
+  width: auto;
+  height: auto;
+}
+
+/* Each image uses the same scale relative to its native canvas dimensions. */
+.title-navigation-item:nth-child(1) img { width: 473px; }
+.title-navigation-item:nth-child(2) img { width: 369px; }
+.title-navigation-item:nth-child(3) img { width: 160px; }
+.title-navigation-item:nth-child(4) img { width: 283px; }
+.title-navigation-item:nth-child(5) img { width: 125px; }
+.title-navigation-item:nth-child(6) img { width: 178px; }
+.title-navigation-item:nth-child(7) img { width: 131px; }
+.title-navigation-item:nth-child(8) img { width: 426px; }
 
 
 
@@ -180,6 +510,24 @@ a:hover{
 
 
 @media (max-width: 768px) {
+  .navigation_list2 {
+    right: 6vw;
+    gap: 12px;
+  }
+
+  .title-navigation-link img {
+    width: auto;
+  }
+
+  .title-navigation-item:nth-child(1) img { width: 307px; }
+  .title-navigation-item:nth-child(2) img { width: 240px; }
+  .title-navigation-item:nth-child(3) img { width: 104px; }
+  .title-navigation-item:nth-child(4) img { width: 184px; }
+  .title-navigation-item:nth-child(5) img { width: 81px; }
+  .title-navigation-item:nth-child(6) img { width: 116px; }
+  .title-navigation-item:nth-child(7) img { width: 85px; }
+  .title-navigation-item:nth-child(8) img { width: 277px; }
+
   #logo {
     /*position: fixed;*/
     margin-bottom: 10px;
@@ -249,11 +597,18 @@ a:hover{
 }
 
 a {
-  cursor: url('../../assets/img/cursor/cursorhover_1.png'),auto;
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, auto !important;
+}
+
+button,
+input[type="button"],
+input[type="submit"],
+select {
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, pointer !important;
 }
 
 .baguetteBox-button svg {
-  cursor: url('../../assets/img/cursor/cursorhover_1.png'),auto;
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, auto;
 }
 
 .paragraphContainer {
@@ -292,15 +647,15 @@ a {
 }
 
 .swiper-button-prev {
-  cursor: url('../../assets/img/cursor/cursorhover_1.png'),auto;
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, auto;
 }
 
 .swiper-button-next {
-  cursor: url('../../assets/img/cursor/cursorhover_1.png'),auto;
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, auto;
 }
 
 .swiper-pagination {
-  cursor: url('../../assets/img/cursor/cursorhover_1.png'),auto;
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, auto;
 }
 
 footer {
@@ -341,7 +696,7 @@ footer {
 
 
 .NavImages{
-  cursor: url('../../assets/img/cursor/cursorhover_1.png'),auto;
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, auto;
 }
 
 
@@ -918,7 +1273,7 @@ footer {
 }
 
 .video-player-pc{
-  cursor: url('../../assets/img/cursor/cursorhover_1.png'),auto; 
+  cursor: url('../../assets/img/cursor/cursorhover_1.png') 32 32, auto;
   display: block;
 }
 
@@ -1064,7 +1419,9 @@ footer {
   
   position: fixed;
   left: 5vh;
-  
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
   top: 350px;
 }
 
@@ -1082,6 +1439,9 @@ footer {
   
   position: fixed;
   right: 5vh ;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
   top: 350px;
 }
 
@@ -1241,6 +1601,18 @@ footer {
   display: block;
 }
 
+/* Artwork settles downward on hover, echoing the homepage cube without
+   disturbing navigation logos or the slider's own transform positioning. */
+.img-fluid:not(#logo3),
+a.swiper-slide {
+  transition: translate .26s cubic-bezier(.22, .7, .2, 1);
+}
+
+.img-fluid:not(#logo3):hover,
+a.swiper-slide:hover {
+  translate: 0 20px;
+}
+
 .img-fluid:hover + .zoom{
   display: block;
 }
@@ -1334,3 +1706,49 @@ footer {
   
 }
 
+/* Kept at the end of the stylesheet so the homepage's old desktop navigation
+   positioning cannot take precedence on phones. The cube and navigation are
+   consecutive flow items: the latter cannot rise into the cube's shadow area. */
+@media (max-width: 700px) {
+  .title-page > .container {
+    width: 100%;
+    max-width: none;
+    padding: 0 6vw 38px;
+  }
+
+  .title-page > .container > .row > .col {
+    padding: 0;
+  }
+
+  .title-page .navigation_list2 {
+    position: static !important;
+    top: auto !important;
+    right: auto !important;
+    width: min(307px, calc(100vw - 48px));
+    max-width: calc(100vw - 48px);
+    margin: 0 auto;
+    transform: none !important;
+    align-items: flex-end;
+    gap: 18px;
+  }
+
+  .title-page .title-navigation-item {
+    display: flex;
+    width: 100%;
+    max-width: 100%;
+    justify-content: flex-end;
+  }
+
+  .title-page .title-navigation-link {
+    display: block;
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+  }
+
+  .title-page .title-navigation-link img {
+    max-width: 100%;
+    height: auto;
+  }
+}
