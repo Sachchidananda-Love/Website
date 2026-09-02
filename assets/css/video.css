@@ -1,4 +1,10 @@
 @import url("paintings.css");
 
-.painting-card__preview video { background: #f8f6f2; }
+.painting-card__media { overflow: hidden; }
+.painting-card__preview { position: absolute; inset: 14px; overflow: hidden; }
+.painting-card__preview video { background: #f8f6f2; object-fit: cover; object-position: center; }
 .painting-dialog__stage video { background: #f8f6f2; }
+
+@media (max-width: 720px) {
+  .painting-card__preview { inset: 8px; }
+}

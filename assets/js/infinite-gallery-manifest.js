@@ -1220,20 +1220,6 @@ window.INFINITE_GALLERY_MEDIA = {
       ]
     },
     {
-      "id": "graphic-design-15",
-      "category": "graphic-design",
-      "collection": "Graphic Design",
-      "title": "OldTimy",
-      "media": [
-        {
-          "src": "assets/img/Graphic Design/THSCO/Other/OldTimy.png",
-          "type": "image",
-          "width": 4972,
-          "height": 4972
-        }
-      ]
-    },
-    {
       "id": "graphic-design-16",
       "category": "graphic-design",
       "collection": "Graphic Design",

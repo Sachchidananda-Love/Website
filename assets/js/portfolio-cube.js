@@ -76,7 +76,7 @@
   // the page while a full gallery image is decoded.
   Object.keys(artworkPools).forEach((category) => {
     artworkPools[category] = artworkPools[category].map((source) => (
-      source.includes('assets/img/cube/') || /\.(mov|mp4|m4v)$/i.test(source)
+      source.includes('assets/img/cube/') || source.includes('assets/img/Social Icons/') || /\.(mov|mp4|m4v)$/i.test(source)
         ? source
         : source.replace('assets/img/', 'assets/img/cube/')
     ));
@@ -140,6 +140,7 @@
   };
 
   const isVideoSource = (source) => /\.(mov|mp4|m4v)$/i.test(source);
+  const assetURL = (source) => source.split('/').map(encodeURIComponent).join('/');
 
   const glowColorCache = new Map();
   let glowRevision = 0;
@@ -184,7 +185,7 @@
       }
     };
     image.onerror = () => resolve(fallbackPalette(source));
-    image.src = source;
+    image.src = assetURL(source);
     });
   };
   const updateGlow = () => {
@@ -204,7 +205,7 @@
     return new Promise((resolve) => {
     const image = new Image();
     image.onload = image.onerror = resolve;
-    image.src = source;
+    image.src = assetURL(source);
     });
   };
 
@@ -218,13 +219,14 @@
     if (!initial) await preload(source);
     if (token !== cycleToken) return;
 
-    nextMedia.src = source;
+    nextMedia.src = assetURL(source);
     nextMedia.classList.toggle('is-uncropped', isUncroppedVideo);
     face.isPlaybackLocked = false;
     if (isVideo) {
+      const isAboutVideo = activePool === 'about';
       face.isPlaybackLocked = true;
-      nextMedia.loop = false;
-      nextMedia.onended = () => {
+      nextMedia.loop = isAboutVideo;
+      nextMedia.onended = isAboutVideo ? null : () => {
         if (face.source === source) {
           face.isPlaybackLocked = false;
           rotateFace(face);
@@ -246,8 +248,10 @@
   const refreshArtwork = async (instant = false) => {
     const token = ++cycleToken;
     cubeContainer.classList.toggle('portfolio-cube--instant', instant);
+    cubeContainer.classList.toggle('portfolio-cube--framed', ['paintings', 'digital', 'graphicDesign', 'socialMedia'].includes(activePool));
+    cubeContainer.classList.toggle('portfolio-cube--social', activePool === 'socialMedia');
     const pool = artworkPools[activePool] || artworkPools.all;
-    const selection = chooseArtwork(pool, faces.length);
+    const selection = activePool === 'socialMedia' ? pool.slice(0, faces.length) : chooseArtwork(pool, faces.length);
     await Promise.all(faces.map((face, index) => replaceFace(face, selection[index], !face.source, token)));
     if (token === cycleToken && instant) {
       window.requestAnimationFrame(() => {
@@ -270,7 +274,7 @@
   // Each face rotates independently, keeping the object from changing as a
   // single synchronized block. Values are intentionally staggered at 3–5 sec.
   const rotateFace = (face) => {
-    if (face.isPlaybackLocked) return;
+    if (face.isPlaybackLocked || activePool === 'socialMedia') return;
     const pool = artworkPools[activePool] || artworkPools.all;
     const occupiedSources = new Set(faces.map((item) => item.source));
     let candidates = pool.filter((source) => source !== face.source && !occupiedSources.has(source));
@@ -290,11 +294,11 @@
     if (isVideoSource(source)) {
       const video = document.createElement('video');
       video.preload = 'metadata';
-      video.src = source;
+      video.src = assetURL(source);
       return;
     }
     const image = new Image();
-    image.src = source;
+    image.src = assetURL(source);
   });
   if (window.innerWidth > 700) {
     if ('requestIdleCallback' in window) {

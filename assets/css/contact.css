@@ -1,0 +1,17 @@
+@import url("site-cursor.css");
+
+:root { color-scheme: light; }
+* { box-sizing: border-box; }
+body { margin: 0; overflow: hidden; background: #f8f6f2; color: #161616; font-family: Helvetica, Arial, sans-serif; }
+.contact-back { position: fixed; z-index: 3; top: max(22px, env(safe-area-inset-top)); left: max(24px, env(safe-area-inset-left)); color: inherit; font-size: 17px; text-decoration: none; opacity: .72; transition: opacity 160ms ease; }
+.contact-back:hover, .contact-back:focus-visible { opacity: 1; }
+.social-field { position: relative; width: 100vw; height: 100dvh; }
+.social-orbit { --offset-x: 0px; --offset-y: 0px; --drift-x: 0px; --drift-y: 0px; position: absolute; display: grid; place-items: center; width: clamp(38px, 5vw, 69px); aspect-ratio: 1; color: #161616; text-decoration: none; transform: translate3d(calc(var(--offset-x) + var(--drift-x)), calc(var(--offset-y) + var(--drift-y)), 0); transition: width 220ms ease; }
+.social-orbit::after { position: absolute; z-index: 0; inset: -70px; content: ''; }
+.social-orbit img { position: relative; z-index: 1; display: block; width: 100%; height: 100%; object-fit: contain; transition: opacity 180ms ease, transform 260ms ease; }
+.social-orbit span { position: absolute; z-index: 1; max-width: min(80vw, 280px); padding: 5px 8px; overflow: hidden; color: #161616; background: #f8f6f2; font-size: clamp(13px, 1.5vw, 18px); letter-spacing: -.03em; line-height: 1.1; opacity: 0; text-overflow: ellipsis; transform: scale(.8); transition: opacity 160ms ease, transform 180ms ease; white-space: nowrap; }
+.social-orbit.is-near img, .social-orbit:hover img, .social-orbit:focus-visible img { opacity: 0; transform: scale(.72) rotate(-5deg); }
+.social-orbit.is-near span, .social-orbit:hover span, .social-orbit:focus-visible span { opacity: 1; transform: scale(1); }
+.social-orbit:focus-visible { outline: 1px solid #161616; outline-offset: 8px; }
+@media (max-width: 700px) { .social-orbit { width: clamp(31px, 9vw, 45px); } }
+@media (prefers-reduced-motion: reduce) { .social-orbit, .social-orbit img, .social-orbit span { transition: none; } }

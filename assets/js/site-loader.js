@@ -1,6 +1,5 @@
 (() => {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const files = ['1', '2', '3', '4', '5', '6'];
   const faces = ['front', 'back', 'right', 'left', 'top', 'bottom'];
   const minimumVisibleMs = 2000;
   const minimumIntervalMs = 5 * 60 * 1000;
@@ -38,7 +37,7 @@
     loader.className = 'site-loader';
     loader.setAttribute('role', 'status');
     loader.setAttribute('aria-label', 'Loading page');
-    loader.innerHTML = `<div class="site-loader__scene"><div class="site-loader__cube">${faces.map((face, index) => `<div class="site-loader__face site-loader__face--${face}"><video src="assets/img/Loading/${files[index]}.mp4" muted autoplay loop playsinline preload="auto"></video></div>`).join('')}</div></div>`;
+    loader.innerHTML = `<div class="site-loader__scene"><div class="site-loader__cube" aria-hidden="true">${faces.map((face) => `<div class="site-loader__face site-loader__face--${face}"></div>`).join('')}</div></div>`;
     document.body.append(loader);
     return loader;
   };
@@ -63,7 +62,6 @@
     document.documentElement.classList.add('site-loader-active');
     overlay.hidden = false;
     overlay.classList.remove('is-hiding');
-    overlay.querySelectorAll('video').forEach((video) => video.play().catch(() => {}));
     startAnimation();
     return true;
   };

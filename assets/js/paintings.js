@@ -11,7 +11,7 @@
   const works = {
     'AR': { details: '8.5 × 11 in · Spray paint, circuit board, wire', tags: ['Spray Paint'] },
     'Attenborough': { details: '16 × 20 in · Spray paint', description: 'David Attenborough.', tags: ['Spray Paint', 'People'] },
-    'Avijjā': { details: '9 × 12 in · $185 · Spray paint, ink', tags: ['Spray Paint', 'Ink', 'For Sale'] },
+    'Avijjā': { details: '9 × 12 in · Spray paint, ink', tags: ['Spray Paint', 'Ink'] },
     'blå': { title: 'blå', details: '8 × 10 in · Spray paint, surgical masks', tags: ['Spray Paint', 'People'] },
     'chef': { title: 'Chef', details: '16 × 20 in · Spray paint, vinyl', tags: ['Spray Paint', 'Vinyl'] },
     'Dvaita Vedanta': { details: '16 × 20 in', tags: ['Spray Paint', 'Vinyl', 'Nature', 'Abstract'] },
@@ -23,17 +23,17 @@
     'International-communication': { title: 'International Communication', details: '12 × 36 in · $270 · Spray paint', tags: ['Spray Paint', 'People', 'For Sale'] },
     "It's Nooni": { details: '12 × 16 in · Spray paint', tags: ['Spray Paint'] },
     'Kalyāṇa-mittatā': { title: 'Kalyāṇa-mittatā', details: '16 × 20 in · Spray paint, ink', tags: ['Spray Paint', 'Ink', 'People', 'Nature', 'Tendrils'] },
-    'knust': { title: 'Knust', details: '16 × 20 in · $1,100 · Spray paint, glass, wire', tags: ['Spray Paint', 'Glass', 'People', 'For Sale'] },
+    'knust': { title: 'Knust', details: '16 × 20 in · Spray paint, glass, wire', tags: ['Spray Paint', 'Glass', 'People'] },
     'Laya': { details: '18 × 24 in · Spray paint, vinyl', tags: ['Spray Paint', 'Vinyl', 'Nature', 'Abstract'] },
     'Lysergic Scrawl': { details: '2018 · 15 × 17 cm', description: 'Drawn when on LSD.', tags: ['Psychedelic'] },
     'nāga': { title: 'nāga', details: '8 × 10 in · Spray paint, ink', tags: ['Spray Paint', 'Ink', 'Nature', 'Abstract', 'Tendrils'] },
-    'Neither': { details: '16 × 20 in · $130 · Spray paint, ink', tags: ['Spray Paint', 'Ink', 'Abstract', 'For Sale'] },
-    'octagons': { title: 'Octagons', details: '12 × 16 in · $120 · Acrylic', tags: ['Acrylic', 'Nature', 'For Sale'] },
+    'Neither': { details: '16 × 20 in · Spray paint, ink', tags: ['Spray Paint', 'Ink', 'Abstract'] },
+    'octagons': { title: 'Octagons', details: '12 × 16 in · Acrylic', tags: ['Acrylic', 'Nature'] },
     'oud': { title: 'Oud', details: '9 × 12 in · Spray paint', tags: ['Spray Paint', 'Abstract', 'People'] },
     'Pralaya': { details: '36 × 48 in · Spray paint', tags: ['Spray Paint', 'Nature', 'Abstract'] },
     'Ram Dass': { details: '16 × 20 in · Spray paint, mirror', description: 'Ram Dass.', tags: ['Spray Paint', 'Glass', 'People'] },
     'Rūpa': { title: 'Rūpa', details: '16 × 12 in · Spray paint, vinyl', tags: ['Spray Paint', 'Vinyl'] },
-    'Sabhāva': { title: 'Sabhāva', details: '28 × 22 × 4 in · $3,200 · Spray paint, glass, wood', tags: ['Spray Paint', 'Glass', 'People', 'For Sale'] },
+    'Sabhāva': { title: 'Sabhāva', details: '28 × 22 × 4 in · Spray paint, glass, wood', tags: ['Spray Paint', 'Glass', 'People'] },
     'Sāṃkhya': { title: 'Sāṃkhya', details: '36 × 48 in', tags: ['Spray Paint', 'Vinyl', 'Abstract'] },
     'Stillhet': { details: '30 × 22 in · Spray paint', tags: ['Spray Paint', 'Nature', 'Abstract'] },
     'Tathata': { title: 'Tathata', details: '2020 · 20 × 27 cm', description: 'A visual representation of psychedelic experiences induced by nitrous oxide and LSD.', tags: ['Psychedelic'] },
@@ -43,6 +43,10 @@
     'Painting.720': { title: 'Painting process', details: 'Process video', tags: [] }
   };
   const items = window.INFINITE_GALLERY_MEDIA?.items?.filter((item) => item.category === 'paintings') || [];
+  const defaultOrder = new Map([
+    'fragmentation', 'Pralaya', 'Kalyāṇa-mittatā', 'knust', 'Neither', 'Tathata',
+    'nāga', 'Laya', 'Sāṃkhya', 'Tathā', 'Stillhet', 'Idaṃ'
+  ].map((title, index) => [title, index]));
   const numericSize = (item) => {
     const details = metadataFor(item).details || '';
     const match = details.match(/(\d+(?:\.\d+)?)\s*×\s*(\d+(?:\.\d+)?)/);
@@ -225,6 +229,10 @@
     if (sort === 'size-desc') sortBy(numericSize, -1);
     if (sort === 'price-asc') sortBy(numericPrice, 1);
     if (sort === 'price-desc') sortBy(numericPrice, -1);
+    if (sort === 'default') visibleItems.sort((left, right) => (
+      (defaultOrder.get(left.title) ?? Number.POSITIVE_INFINITY)
+      - (defaultOrder.get(right.title) ?? Number.POSITIVE_INFINITY)
+    ));
     renderItems(visibleItems);
     updateFilterMenus(selections);
   };

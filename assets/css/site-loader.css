@@ -51,25 +51,11 @@ html.site-loader-active body {
 
 .site-loader__face {
   position: absolute;
-  /* A half-pixel overlap prevents anti-aliased cracks between 3D planes. */
-  inset: -.5px;
-  overflow: hidden;
+  inset: 0;
+  border: 1px solid #161616;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* White parts of the supplied MP4s blend into the page instead of forming tiles. */
   background: transparent;
-}
-
-.site-loader__face video {
-  position: absolute;
-  inset: -10px;
-  display: block;
-  width: calc(100% + 20px);
-  height: calc(100% + 20px);
-  object-fit: cover;
-  filter: invert(1);
-  mix-blend-mode: multiply;
-  transform: translateZ(0);
 }
 
 .site-loader__face--front { transform: translateZ(var(--loader-depth)); }

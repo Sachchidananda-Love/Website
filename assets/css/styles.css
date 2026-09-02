@@ -30,8 +30,8 @@ body [style*="font-family"] {
 .site-back {
   position: fixed;
   z-index: 19;
-  top: max(11.5rem, calc(env(safe-area-inset-top) + 88px));
-  right: max(24px, env(safe-area-inset-right));
+  top: max(22px, env(safe-area-inset-top));
+  left: max(24px, env(safe-area-inset-left));
   color: #171717;
   font: 17px/1 Helvetica, Arial, sans-serif;
   text-decoration: none;
@@ -197,12 +197,21 @@ body [style*="font-family"] {
   opacity: 1;
 }
 
-/* This recording is intentionally shown in full rather than cropped to a face. */
-.portfolio-cube__face video.is-uncropped {
-  inset: 0;
-  width: 100%;
-  height: 100%;
+/* Framed collections keep every piece inside a white border. */
+.portfolio-cube--framed .portfolio-cube__face img,
+.portfolio-cube--framed .portfolio-cube__face video,
+.portfolio-cube--framed .portfolio-cube__face video.is-uncropped {
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
   object-fit: contain;
+}
+
+.portfolio-cube--social .portfolio-cube__face img,
+.portfolio-cube--social .portfolio-cube__face video {
+  inset: 48px;
+  width: calc(100% - 96px);
+  height: calc(100% - 96px);
 }
 
 .portfolio-cube--instant .portfolio-cube__face img,
@@ -419,15 +428,15 @@ a:hover{
   height: auto;
 }
 
-/* Each image uses the same scale relative to its native canvas dimensions. */
-.title-navigation-item:nth-child(1) img { width: 473px; }
-.title-navigation-item:nth-child(2) img { width: 369px; }
-.title-navigation-item:nth-child(3) img { width: 160px; }
-.title-navigation-item:nth-child(4) img { width: 283px; }
-.title-navigation-item:nth-child(5) img { width: 125px; }
-.title-navigation-item:nth-child(6) img { width: 178px; }
-.title-navigation-item:nth-child(7) img { width: 131px; }
-.title-navigation-item:nth-child(8) img { width: 426px; }
+/* Each image keeps its scale when the navigation order changes. */
+.title-navigation-link[data-cube-category="about"] img { width: 131px; }
+.title-navigation-link[data-cube-category="paintings"] img { width: 473px; }
+.title-navigation-link[data-cube-category="graphicDesign"] img { width: 369px; }
+.title-navigation-link[data-cube-category="digital"] img { width: 160px; }
+.title-navigation-link[data-cube-category="photography"] img { width: 283px; }
+.title-navigation-link[data-cube-category="video"] img { width: 125px; }
+.title-navigation-link[data-cube-category="writing"] img { width: 178px; }
+.title-navigation-link[data-cube-category="socialMedia"] img { width: 426px; }
 
 
 
@@ -541,14 +550,14 @@ a:hover{
     width: auto;
   }
 
-  .title-navigation-item:nth-child(1) img { width: 307px; }
-  .title-navigation-item:nth-child(2) img { width: 240px; }
-  .title-navigation-item:nth-child(3) img { width: 104px; }
-  .title-navigation-item:nth-child(4) img { width: 184px; }
-  .title-navigation-item:nth-child(5) img { width: 81px; }
-  .title-navigation-item:nth-child(6) img { width: 116px; }
-  .title-navigation-item:nth-child(7) img { width: 85px; }
-  .title-navigation-item:nth-child(8) img { width: 277px; }
+  .title-navigation-link[data-cube-category="about"] img { width: 85px; }
+  .title-navigation-link[data-cube-category="paintings"] img { width: 307px; }
+  .title-navigation-link[data-cube-category="graphicDesign"] img { width: 240px; }
+  .title-navigation-link[data-cube-category="digital"] img { width: 104px; }
+  .title-navigation-link[data-cube-category="photography"] img { width: 184px; }
+  .title-navigation-link[data-cube-category="video"] img { width: 81px; }
+  .title-navigation-link[data-cube-category="writing"] img { width: 116px; }
+  .title-navigation-link[data-cube-category="socialMedia"] img { width: 277px; }
 
   #logo {
     /*position: fixed;*/
