@@ -197,7 +197,7 @@ body {
   position: fixed;
   z-index: 20;
   top: max(22px, env(safe-area-inset-top));
-  left: max(24px, env(safe-area-inset-left));
+  right: max(24px, env(safe-area-inset-right));
   color: #171717;
   font: 17px/1 Helvetica, Arial, sans-serif;
   text-decoration: none;
@@ -312,7 +312,7 @@ body {
 @media (max-width: 700px) {
   .gallery-back {
     top: max(18px, env(safe-area-inset-top));
-    left: max(18px, env(safe-area-inset-left));
+    right: max(18px, env(safe-area-inset-right));
     font-size: 15px;
   }
 

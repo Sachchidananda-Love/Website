@@ -12,25 +12,11 @@
     <link rel="stylesheet" href="assets/css/Footer-Clean.css">
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="assets/css/site-loader.css">
+    <link rel="stylesheet" href="assets/css/about.css">
 </head>
-<script>
-    
-    $( document ).ready(function() {
-        
-        var src = "assets/img/Videos/Logo.gif" + new Date().getTime();
-        $("#logo2").attr("src", src);
-        
-    });
-
-    var element = document.getElementById(logo2);
-    element.src = "assets/img/Videos/Logo.gif";  
-    element.src = "assets/img/Videos/Logo.gif"+new Date().getTime();
-
-    
-    
-</script>
-<body style="background: #FFFFFF">
+<body class="about-particles-page">
     <script src="assets/js/site-loader.js"></script>
+    <a class="site-back" href="index.html" aria-label="Return to portfolio homepage">back</a>
     <div class="navigation">
         <input type="checkbox" class="navigation_checkbox" id="navi-toggle">
         <label for="navi-toggle" class="navigation_button">
@@ -144,15 +130,30 @@
         </nav>
     </div>
     <div class="space2"></div>
-    <div class="text-center py-4">
-            <video   id="logo2" width="200%" height="100%" style="pointer-events: none;" autoplay="autoplay" muted playsinline>
-                <source src="assets/img/Videos/mm.mp4">
-            </video> 
-                
-        <p class="Aboutparagraph" style="font-family: Better; font-size: 19px; text-align: center;">Calem Bela Anderson-Barwin is the title provisionally assigned to a continuously changing psychophysical structure, most commonly perceived as a human male of Ashkenazi Jewish and Scandinavian descent. Its lungs first entered into exchange with Earth’s atmosphere on August 28, 2001, in Gatineau, Quebec, Canada. It has been accumulating images, habits, contradictions, causes and conditions ever since.</p>
-        <p class="Aboutparagraph" style="font-family: Better; font-size: 19px; text-align: center;">I work across painting, digital media, graphic design, photography and moving image. Rather than maintaining a single visual language, I move between raw mark-making and controlled systems: tangled lines, bruised fields of colour, diagrammatic geometry, collage, typography and clean commercial illustration. Faces are repeatedly obstructed, fragmented, mapped or made porous. Organic structures meet grids, rays, interfaces and architectural frames.</p>
-        <p class="Aboutparagraph" style="font-family: Better; font-size: 19px; text-align: center;">My practice has been influenced by many artistic forms, spiritual traditions, meditation practices and other methods of investigating consciousness. My most sustained recent study and practice has been within the Theravāda Buddhist tradition. Many works that were originally left untitled have since received names drawn from Pāli and Sanskrit concepts found in Buddhist and Hindu thought. These titles are not intended to decode the images or turn them into illustrations of doctrine. They function more as apertures: words placed beside experiences that preceded language, offering one possible entrance without closing the others.</p>
-    </div>
+    <main class="about-particle-layout">
+        <div class="about-particle-stage" aria-hidden="true">
+            <canvas class="about-particle-stage__canvas"></canvas>
+            <div class="about-particle-stage__fallback">
+                <div class="about-particle-stage__fallback-body">
+                    <span class="about-particle-stage__fallback-part about-particle-stage__fallback-head"></span>
+                    <span class="about-particle-stage__fallback-part about-particle-stage__fallback-neck"></span>
+                    <span class="about-particle-stage__fallback-part about-particle-stage__fallback-torso"></span>
+                    <span class="about-particle-stage__fallback-part about-particle-stage__fallback-arm about-particle-stage__fallback-arm--left"></span>
+                    <span class="about-particle-stage__fallback-part about-particle-stage__fallback-arm about-particle-stage__fallback-arm--right"></span>
+                    <span class="about-particle-stage__fallback-part about-particle-stage__fallback-leg about-particle-stage__fallback-leg--left"></span>
+                    <span class="about-particle-stage__fallback-part about-particle-stage__fallback-leg about-particle-stage__fallback-leg--right"></span>
+                </div>
+            </div>
+        </div>
+        <section class="about-particle-copy" aria-labelledby="about-title">
+            <h1 id="about-title">calem anderson-barwin</h1>
+            <div class="about-particle-copy__columns">
+                <p class="Aboutparagraph">Calem Bela Anderson-Barwin is the title provisionally assigned to a continuously changing psychophysical structure, most commonly perceived as a human male of Ashkenazi Jewish and Scandinavian descent. Its lungs first entered into exchange with Earth’s atmosphere on August 28, 2001, in Gatineau, Quebec, Canada. It has been accumulating images, habits, contradictions, causes and conditions ever since.</p>
+                <p class="Aboutparagraph">I work across painting, digital media, graphic design, photography and moving image. Rather than maintaining a single visual language, I move between raw mark-making and controlled systems: tangled lines, bruised fields of colour, diagrammatic geometry, collage, typography and clean commercial illustration. Faces are repeatedly obstructed, fragmented, mapped or made porous. Organic structures meet grids, rays, interfaces and architectural frames.</p>
+                <p class="Aboutparagraph">My practice has been influenced by many artistic forms, spiritual traditions, meditation practices and other methods of investigating consciousness. My most sustained recent study and practice has been within the Theravāda Buddhist tradition. Many works that were originally left untitled have since received names drawn from Pāli and Sanskrit concepts found in Buddhist and Hindu thought. These titles are not intended to decode the images or turn them into illustrations of doctrine. They function more as apertures: words placed beside experiences that preceded language, offering one possible entrance without closing the others.</p>
+            </div>
+        </section>
+    </main>
    
     <footer class="text-center py-4">
         <div class="container">
@@ -209,6 +210,8 @@
     <script src="assets/js/Lightbox-Gallery.js"></script>
     <script src="assets/js/Simple-Slider.js"></script>
     <script src="assets/js/reveal.js"></script>
+    <script src="assets/js/three.min.js"></script>
+    <script src="assets/js/about-particles.js"></script>
     <script src="assets/js/site-cursor.js"></script>
 </body>
 

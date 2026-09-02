@@ -67,6 +67,7 @@ html.site-loader-active body {
   width: calc(100% + 20px);
   height: calc(100% + 20px);
   object-fit: cover;
+  filter: invert(1);
   mix-blend-mode: multiply;
   transform: translateZ(0);
 }

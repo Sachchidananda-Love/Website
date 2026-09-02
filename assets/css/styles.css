@@ -27,6 +27,28 @@ body [style*="font-family"] {
   font-family: Helvetica, Arial, sans-serif !important;
 }
 
+.site-back {
+  position: fixed;
+  z-index: 19;
+  top: max(11.5rem, calc(env(safe-area-inset-top) + 88px));
+  right: max(24px, env(safe-area-inset-right));
+  color: #171717;
+  font: 17px/1 Helvetica, Arial, sans-serif;
+  text-decoration: none;
+  opacity: .72;
+  transition: opacity 160ms ease;
+}
+
+.site-back:hover,
+.site-back:focus-visible {
+  opacity: 1;
+}
+
+.site-back:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 6px;
+}
+
 .title-page-document,
 .title-page,
 .title-page * {
@@ -1042,12 +1064,14 @@ footer {
   animation: fadeIn 1s;
 }
 #footer2{
+  display: none;
   animation: fadeIn 2s;
 }
 #footer3{
   animation: fadeIn 3s;
 }
 #footer4{
+  display: none;
   animation: fadeIn 4s;
 }
 #footer5{
@@ -1084,11 +1108,11 @@ footer {
 
 
 #footer-icon-1{
-  background: url("../img/footer/Facebook.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Facebook.png") center / contain no-repeat;
 }
 
 #footer-icon-1:hover{
-  background: url("../img/footer/1x/Facebook.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Facebook.png") center / contain no-repeat;
 }
 
 #footer-icon-2{
@@ -1100,11 +1124,11 @@ footer {
 }
 
 #footer-icon-3{
-  background: url("../img/footer/Tiktok.png") center / contain no-repeat;
+  background: url("../img/Social Icons/TikTok.png") center / contain no-repeat;
 }
 
 #footer-icon-3:hover{
-  background: url("../img/footer/1x/Tiktok.png") center / contain no-repeat;
+  background: url("../img/Social Icons/TikTok.png") center / contain no-repeat;
 }
 
 #footer-icon-4{
@@ -1116,36 +1140,36 @@ footer {
 }
 
 #footer-icon-5{
-  background: url("../img/footer/youtube.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Youtube.png") center / contain no-repeat;
 }
 
 #footer-icon-5:hover{
-  background: url("../img/footer/1x/youtube.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Youtube.png") center / contain no-repeat;
 }
 
 #footer-icon-6{
-  background: url("../img/footer/insta.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Instagram.png") center / contain no-repeat;
 }
 
 #footer-icon-6:hover{
-  background: url("../img/footer/1x/insta.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Instagram.png") center / contain no-repeat;
 }
 
 #footer-icon-7{
-  background: url("../img/footer/1x/spotify.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Spotify.png") center / contain no-repeat;
 }
 
 #footer-icon-7:hover{
-  background: url("../img/footer/1x/spotify_1.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Spotify.png") center / contain no-repeat;
 }
 
 
 #footer-icon-8{
-  background: url("../img/footer/1x/Whatsapp.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Whatsapp.png") center / contain no-repeat;
 }
 
 #footer-icon-8:hover{
-  background: url("../img/footer/1x/Whatsapp_1.png") center / contain no-repeat;
+  background: url("../img/Social Icons/Whatsapp.png") center / contain no-repeat;
 }
 
 

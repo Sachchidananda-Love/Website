@@ -7,7 +7,7 @@ button { font: inherit; }
 html { cursor: url("../img/cursor/cursor_1.png") 32 32, auto; }
 a, button, select, input, summary { cursor: url("../img/cursor/cursorhover_1.png") 32 32, pointer !important; }
 .paintings-header { max-width: 1320px; margin: 0 auto; padding: 28px 32px 54px; }
-.paintings-back { display: inline-block; margin-bottom: 54px; color: inherit; font-size: 17px; text-decoration: none; opacity: .72; }
+.paintings-back { position: fixed; z-index: 20; top: max(22px, env(safe-area-inset-top)); right: max(24px, env(safe-area-inset-right)); color: inherit; font-size: 17px; text-decoration: none; opacity: .72; }
 .paintings-back:hover, .paintings-back:focus-visible { opacity: 1; }
 .paintings-header__content { display: flex; align-items: end; justify-content: space-between; gap: 42px; }
 .paintings-kicker { margin: 0 0 8px; color: var(--muted); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
