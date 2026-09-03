@@ -21,3 +21,18 @@ html body * {
 .site-cursor--visible {
   opacity: 1;
 }
+
+/* Touch devices do not have a persistent pointer, so never show the custom
+   desktop cursor there. The matching script guard avoids re-enabling it from
+   touch movement. */
+@media (hover: none), (pointer: coarse) {
+  html,
+  html body,
+  html body * {
+    cursor: none !important;
+  }
+
+  .site-cursor {
+    display: none !important;
+  }
+}

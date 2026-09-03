@@ -120,6 +120,7 @@
     <script src="assets/js/portfolio-cube.js"></script>
     <script>
         const cursor = document.querySelector('.site-cursor');
+        const hasFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
         const normalCursorSrc = 'assets/img/cursor/cursor_1.png';
         const hoverCursorSrc = 'assets/img/cursor/cursorhover_1.png';
         new Image().src = hoverCursorSrc;
@@ -163,6 +164,7 @@
         window.addEventListener('pageshow', () => document.body.classList.remove('is-opening-gallery'));
 
         document.addEventListener('pointermove', (event) => {
+            if (!hasFinePointer) return;
             cursor.style.left = `${event.clientX}px`;
             cursor.style.top = `${event.clientY}px`;
             cursor.classList.add('site-cursor--visible');

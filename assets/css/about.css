@@ -23,7 +23,9 @@ body.about-particles-page .about-particle-stage {
   width: 100%;
   height: clamp(1360px, 168vh, 1920px);
   overflow: hidden;
-  pointer-events: none;
+  /* Keep the figure reactive to a finger while retaining normal vertical scroll. */
+  pointer-events: auto;
+  touch-action: pan-y;
 }
 
 body.about-particles-page .about-particle-copy {

@@ -308,6 +308,8 @@
     lastTime: performance.now(),
     type: 'mouse'
   };
+  let activeTouchPointerId = null;
+  let activeTouchIdentifier = null;
   const scroll = {
     lastY: window.scrollY,
     impulse: 0
@@ -365,12 +367,51 @@
     localRay.copy(raycaster.ray).applyMatrix4(inverseMatrix);
   };
 
+  const isWithinFigure = (clientX, clientY) => {
+    const rect = figure.getBoundingClientRect();
+    return clientX >= rect.left && clientX <= rect.right
+      && clientY >= rect.top && clientY <= rect.bottom;
+  };
+
   const handlePointerMove = (event) => {
+    if (event.pointerType === 'touch' && event.pointerId !== activeTouchPointerId) return;
     if (event.pointerType === 'touch' && !pointer.active) return;
     updatePointer(event, pointer.active);
   };
-  const handlePointerDown = (event) => updatePointer(event, true);
-  const releasePointer = () => { pointer.active = false; };
+  const handlePointerDown = (event) => {
+    if (event.pointerType === 'touch') {
+      if (!isWithinFigure(event.clientX, event.clientY)) return;
+      activeTouchPointerId = event.pointerId;
+      figure.setPointerCapture?.(event.pointerId);
+    }
+    updatePointer(event, true);
+  };
+  const releasePointer = (event) => {
+    if (event?.pointerType === 'touch' && event.pointerId !== activeTouchPointerId) return;
+    activeTouchPointerId = null;
+    pointer.active = false;
+  };
+  const touchPointEvent = (touch) => ({
+    clientX: touch.clientX,
+    clientY: touch.clientY,
+    pointerType: 'touch'
+  });
+  const handleTouchStart = (event) => {
+    const touch = [...event.changedTouches].find((item) => isWithinFigure(item.clientX, item.clientY));
+    if (!touch) return;
+    activeTouchIdentifier = touch.identifier;
+    updatePointer(touchPointEvent(touch), true);
+  };
+  const handleTouchMove = (event) => {
+    const touch = [...event.touches].find((item) => item.identifier === activeTouchIdentifier);
+    if (touch) updatePointer(touchPointEvent(touch), true);
+  };
+  const handleTouchEnd = (event) => {
+    if ([...event.changedTouches].some((item) => item.identifier === activeTouchIdentifier)) {
+      activeTouchIdentifier = null;
+      releasePointer();
+    }
+  };
   const handlePointerLeave = () => {
     if (pointer.type !== 'touch') pointer.active = false;
   };
@@ -529,6 +570,10 @@
     window.removeEventListener('pointercancel', releasePointer);
     window.removeEventListener('pointerleave', handlePointerLeave);
     window.removeEventListener('blur', releasePointer);
+    figure.removeEventListener('touchstart', handleTouchStart);
+    figure.removeEventListener('touchmove', handleTouchMove);
+    figure.removeEventListener('touchend', handleTouchEnd);
+    figure.removeEventListener('touchcancel', handleTouchEnd);
     canvas.removeEventListener('webglcontextlost', handleContextLost);
     scene.remove(points);
     geometry.dispose();
@@ -548,6 +593,10 @@
   window.addEventListener('pointercancel', releasePointer, { passive: true });
   window.addEventListener('pointerleave', handlePointerLeave, { passive: true });
   window.addEventListener('blur', releasePointer);
+  figure.addEventListener('touchstart', handleTouchStart, { passive: true });
+  figure.addEventListener('touchmove', handleTouchMove, { passive: true });
+  figure.addEventListener('touchend', handleTouchEnd, { passive: true });
+  figure.addEventListener('touchcancel', handleTouchEnd, { passive: true });
   canvas.addEventListener('webglcontextlost', handleContextLost, false);
 
   resize();

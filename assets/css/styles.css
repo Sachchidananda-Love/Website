@@ -88,6 +88,18 @@ body [style*="font-family"] {
   opacity: 1;
 }
 
+@media (hover: none), (pointer: coarse) {
+  .title-page-document,
+  .title-page,
+  .title-page * {
+    cursor: none !important;
+  }
+
+  .title-page .site-cursor {
+    display: none;
+  }
+}
+
 .portfolio-cube {
   --cube-size: 230px;
   --cube-depth: 115px;

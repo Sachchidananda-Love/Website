@@ -1,5 +1,6 @@
 (() => {
   if (document.querySelector('.title-page')) return;
+  if (window.matchMedia('(hover: none), (pointer: coarse)').matches) return;
   const cursorPath = document.currentScript?.dataset.cursorPath || 'assets/img/cursor/';
   const cursor = document.createElement('img');
   cursor.className = 'site-cursor';

@@ -33,6 +33,21 @@
     element.src = media.src;
     return element;
   };
+  const screenWhiteBackground = (image) => {
+    if (image.tagName !== 'IMG') return;
+    const screen = () => {
+      try {
+        const canvas = document.createElement('canvas'); canvas.width = canvas.height = 36;
+        const context = canvas.getContext('2d', { willReadFrequently: true });
+        context.drawImage(image, 0, 0, 36, 36);
+        const pixels = context.getImageData(0, 0, 36, 36).data; let whitePixels = 0;
+        for (let index = 0; index < pixels.length; index += 4) if (pixels[index] > 245 && pixels[index + 1] > 245 && pixels[index + 2] > 245 && pixels[index + 3] > 245) whitePixels += 1;
+        if (whitePixels / 1296 >= 0.12) image.classList.add('white-is-transparent');
+      } catch {}
+    };
+    image.addEventListener('load', screen, { once: true });
+    if (image.complete) screen();
+  };
   const openViewer = (item, selectedView = 0) => {
     const start = allItems.indexOf(item); const order = [...allItems.slice(start), ...allItems.slice(0, start)]; dialogContent.replaceChildren();
     order.forEach((work, workIndex) => {
@@ -50,7 +65,7 @@
     grid.replaceChildren();
     items.forEach((item) => {
       const fragment = template.content.cloneNode(true); const card = fragment.querySelector('.painting-card'); const media = fragment.querySelector('.painting-card__media'); const preview = fragment.querySelector('.painting-card__preview'); const fullscreen = fragment.querySelector('.painting-card__fullscreen'); let viewIndex = 0;
-      const render = () => { preview.replaceChildren(); const element = mediaElement(item.media[viewIndex], item.title); if (element.tagName === 'VIDEO') { element.controls = false; element.autoplay = true; element.loop = true; } preview.append(element); };
+      const render = () => { preview.replaceChildren(); const element = mediaElement(item.media[viewIndex], item.title); if (element.tagName === 'VIDEO') { element.controls = false; element.autoplay = true; element.loop = true; } preview.append(element); screenWhiteBackground(element); };
       render(); fullscreen.addEventListener('click', () => openViewer(item, viewIndex)); media.addEventListener('click', (event) => { if (!event.target.closest('button')) openViewer(item, viewIndex); });
       if (item.media.length > 1) ['previous', 'next'].forEach((direction) => { const button = document.createElement('button'); button.className = `painting-card__${direction}`; button.type = 'button'; const icon = document.createElement('img'); icon.src = `assets/img/${direction === 'previous' ? 'leftarrow' : 'rightarrow'}.png`; icon.alt = ''; button.append(icon); button.addEventListener('click', () => { viewIndex = (viewIndex + (direction === 'next' ? 1 : -1) + item.media.length) % item.media.length; render(); }); media.append(button); });
       fragment.querySelector('.painting-card__title').textContent = item.title;
