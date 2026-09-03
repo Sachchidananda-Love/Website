@@ -107,37 +107,95 @@
       info.append(heading, details);
       if (metadata.description) { const description = document.createElement('p'); description.textContent = metadata.description; info.append(description); }
       let activeIndex = workIndex === 0 ? currentIndex : 0;
-      let zoom;
+      const minimumZoom = 100;
+      const initialZoom = 135;
+      const maximumZoom = 225;
+      let zoomAmount = minimumZoom;
+      let zoomControlsVisible = false;
+      let zoomSource = work.media[activeIndex].src;
+      let zoomSlider;
+      let zoomControls;
+      const setZoomAmount = (nextAmount) => {
+        zoomAmount = nextAmount;
+        const isZoomed = zoomAmount > minimumZoom;
+        stage.classList.toggle('is-zoomed', isZoomed);
+        stage.style.setProperty('--zoom-scale', `${zoomAmount}%`);
+        stage.dataset.zoomCursor = zoomControlsVisible ? 'out' : 'in';
+        stage.setAttribute('aria-label', zoomControlsVisible ? `Artwork zoom: ${zoomAmount} percent.` : 'Click to show zoom controls.');
+        if (zoomSlider) zoomSlider.value = zoomAmount;
+      };
+      const showZoomControls = () => {
+        if (zoomControlsVisible) return;
+        zoomControlsVisible = true;
+        zoomControls = document.createElement('div');
+        zoomControls.className = 'painting-dialog__zoom-controls artwork-zoom-controls';
+        const label = document.createElement('label');
+        label.textContent = 'Zoom';
+        zoomSlider = document.createElement('input');
+        zoomSlider.type = 'range';
+        zoomSlider.min = minimumZoom;
+        zoomSlider.max = maximumZoom;
+        zoomSlider.step = 5;
+        zoomSlider.value = initialZoom;
+        zoomSlider.setAttribute('aria-label', 'Artwork zoom');
+        zoomSlider.addEventListener('input', () => setZoomAmount(Number(zoomSlider.value)));
+        zoomControls.addEventListener('click', (event) => event.stopPropagation());
+        zoomControls.addEventListener('keydown', (event) => event.stopPropagation());
+        label.append(zoomSlider);
+        zoomControls.append(label);
+        stage.append(zoomControls);
+        setZoomAmount(initialZoom);
+        const image = stage.querySelector('img');
+        if (image) image.src = zoomSource;
+      };
+      const hideZoomControls = () => {
+        zoomControls?.remove();
+        zoomControls = undefined;
+        zoomSlider = undefined;
+        zoomControlsVisible = false;
+        setZoomAmount(minimumZoom);
+      };
+      const advanceZoom = () => { if (zoomControlsVisible) hideZoomControls(); else showZoomControls(); };
       const renderMedia = (index) => {
         activeIndex = index;
-        stage.classList.remove('is-zoomed');
+        zoomAmount = minimumZoom;
+        zoomControlsVisible = false;
+        zoomSlider = undefined;
+        zoomControls = undefined;
+        zoomSource = work.media[activeIndex].src;
+        stage.classList.toggle('has-zoom', work.media[activeIndex].type === 'image');
+        if (work.media[activeIndex].type === 'image') {
+          stage.setAttribute('role', 'button');
+          stage.tabIndex = 0;
+        } else {
+          stage.removeAttribute('role');
+          stage.removeAttribute('tabindex');
+          stage.removeAttribute('aria-label');
+          delete stage.dataset.zoomCursor;
+        }
         stage.replaceChildren();
         stage.append(mediaElement(work.media[activeIndex], metadata.title || work.title));
-        if (zoom) stage.append(zoom);
+        if (work.media[activeIndex].type === 'image') setZoomAmount(zoomAmount);
       };
+      stage.addEventListener('click', () => {
+        if (work.media[activeIndex].type === 'image') advanceZoom();
+      });
+      stage.addEventListener('keydown', (event) => {
+        if (work.media[activeIndex].type !== 'image' || (event.key !== 'Enter' && event.key !== ' ')) return;
+        event.preventDefault();
+        advanceZoom();
+      });
       renderMedia(activeIndex);
       const hdSource = highResolutionSource(work.media[activeIndex]);
       if (work.media[activeIndex].type === 'image') {
-        stage.classList.add('has-zoom');
-        let zoomSource = work.media[activeIndex].src;
-        zoom = document.createElement('button');
-        zoom.className = 'painting-dialog__zoom'; zoom.type = 'button'; zoom.setAttribute('aria-label', 'Zoom in');
-        zoom.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.25"></circle><path d="m15.2 15.2 5 5M10.5 7.5v6M7.5 10.5h6"></path></svg>';
-        zoom.addEventListener('click', (event) => {
-          event.stopPropagation();
-          const zoomed = !stage.classList.contains('is-zoomed');
-          stage.classList.toggle('is-zoomed', zoomed);
-          zoom.setAttribute('aria-label', zoomed ? 'Zoom out' : 'Zoom in');
-          if (zoomed) { stage.replaceChildren(); const image = mediaElement({ ...work.media[activeIndex], src: zoomSource }, metadata.title || work.title); stage.append(image, zoom); }
-          else renderMedia(activeIndex);
-        });
-        stage.addEventListener('click', () => zoom.click());
         if (hdSource) {
-        const probe = new Image();
-        probe.addEventListener('load', () => {
-          zoomSource = hdSource;
-        }, { once: true });
-        probe.src = hdSource;
+          const probe = new Image();
+          probe.addEventListener('load', () => {
+            zoomSource = hdSource;
+            const image = stage.querySelector('img');
+            if (image && zoomAmount > minimumZoom) image.src = zoomSource;
+          }, { once: true });
+          probe.src = hdSource;
         }
       }
       if (work.media.length > 1) {

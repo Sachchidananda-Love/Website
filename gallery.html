@@ -13,6 +13,16 @@
     <script src="assets/js/site-loader.js"></script>
     <a class="gallery-back" href="index.html" aria-label="Return to portfolio homepage">back</a>
 
+    <div class="gallery-meta" aria-hidden="true">
+        <span>infinite gallery</span>
+        <span data-gallery-count></span>
+    </div>
+
+    <div class="gallery-controls" aria-label="Gallery controls">
+        <div class="gallery-filters" data-gallery-filters aria-label="Filter artworks by collection"></div>
+        <button class="gallery-surprise" type="button" data-gallery-surprise>surprise me</button>
+    </div>
+
     <main class="gallery-viewport" data-gallery-viewport tabindex="0" aria-label="Infinite artwork gallery. Drag or use the arrow keys to explore.">
         <div class="gallery-plane" data-gallery-plane></div>
         <p class="gallery-hint" aria-hidden="true">drag to explore</p>
@@ -29,6 +39,7 @@
     </dialog>
 
     <script src="assets/js/infinite-gallery-manifest.js"></script>
+    <script src="assets/js/artwork-zoom.js"></script>
     <script src="assets/js/infinite-gallery.js"></script>
     <script src="assets/js/site-cursor.js"></script>
 </body>

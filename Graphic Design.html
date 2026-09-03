@@ -12,8 +12,14 @@
     <script src="assets/js/site-loader.js"></script>
     <header class="paintings-header graphic-header">
         <a class="paintings-back" href="index.html">back</a>
-        <p class="paintings-kicker">Calem Anderson-Barwin</p>
-        <h1>Graphic Design</h1>
+        <div class="paintings-header__content">
+            <div><h1>Graphic Design</h1><p class="paintings-intro">Brand identities, campaigns, packaging, menus, apparel, and editorial design.</p></div>
+            <form class="paintings-controls" data-graphic-controls aria-label="Filter and sort graphic design work">
+                <details class="paintings-filter" data-filter-menu="client"><summary>Section <span>All sections</span></summary><div class="paintings-filter__options"><label><input type="checkbox" name="client" value="Independent"> <span>Selected work</span></label><label><input type="checkbox" name="client" value="The Hot Sauce Co."> <span>The Hot Sauce Co.</span></label><label><input type="checkbox" name="client" value="Palmier"> <span>Palmier</span></label></div></details>
+                <details class="paintings-filter" data-filter-menu="type"><summary>Type <span>All types</span></summary><div class="paintings-filter__options"><label><input type="checkbox" name="type" value="Branding"> <span>Branding</span></label><label><input type="checkbox" name="type" value="Logo"> <span>Logo</span></label><label><input type="checkbox" name="type" value="Apparel"> <span>Apparel</span></label><label><input type="checkbox" name="type" value="Menu"> <span>Menu</span></label><label><input type="checkbox" name="type" value="Product"> <span>Product</span></label><label><input type="checkbox" name="type" value="Social Media"> <span>Social media</span></label><label><input type="checkbox" name="type" value="Cover Art"> <span>Cover art</span></label></div></details>
+                <label>Sort by<select name="sort"><option value="default">Default order</option><option value="title-asc">Title: A to Z</option><option value="title-desc">Title: Z to A</option></select></label>
+            </form>
+        </div>
     </header>
     <main>
         <section class="graphic-section" data-graphic-section="general"><h2>Selected work</h2><div class="paintings-grid" data-graphic-grid="general"></div></section>
@@ -28,9 +34,10 @@
             <div class="palmier-menus" data-palmier-menus aria-label="Palmier menu designs"></div>
         </section>
     </main>
-    <template data-graphic-template><article class="painting-card"><div class="painting-card__media"><div class="painting-card__preview"></div><button class="painting-card__fullscreen" type="button" aria-label="Open fullscreen"><img src="assets/img/1x/fullscreen.png" alt=""></button></div><div class="painting-card__body"><h2 class="painting-card__title"></h2></div></article></template>
+    <template data-graphic-template><article class="painting-card"><div class="painting-card__media"><div class="painting-card__preview"></div><button class="painting-card__fullscreen" type="button" aria-label="Open fullscreen"><img src="assets/img/1x/fullscreen.png" alt=""></button></div><div class="painting-card__body"><h2 class="painting-card__title"></h2><p class="painting-card__description"></p><ul class="painting-card__tags" aria-label="Project tags"></ul></div></article></template>
     <dialog class="painting-dialog" data-graphic-dialog><button class="painting-dialog__close" type="button" aria-label="Close viewer">×</button><div class="painting-dialog__content" data-graphic-dialog-content></div></dialog>
     <script src="assets/js/infinite-gallery-manifest.js"></script>
+    <script src="assets/js/artwork-zoom.js"></script>
     <script src="assets/js/graphic-design.js"></script>
     <script src="assets/js/site-cursor.js"></script>
 </body>

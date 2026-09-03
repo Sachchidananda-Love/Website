@@ -1,6 +1,7 @@
 @import url("paintings.css");
 
 .graphic-header { padding-bottom: 48px; }
+.graphic-header .paintings-controls { grid-template-columns: repeat(2, minmax(150px, 1fr)); }
 .graphic-section { max-width: 1320px; padding: 66px 32px 0; margin: 0 auto; }
 .graphic-section > h2 { margin: 0 0 22px; font: 32px/1 Helvetica, Arial, sans-serif; font-weight: 400; }
 .graphic-section .paintings-grid { max-width: none; }
@@ -13,4 +14,6 @@
 .palmier-menus { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100vw; margin-left: calc(50% - 50vw); }
 .palmier-menus button { display: block; padding: 0; border: 0; background: transparent; cursor: pointer; }
 .palmier-menus img { display: block; width: 100%; height: auto; }
+.painting-dialog__visit { display: inline-block; padding: 10px 15px; margin-top: 14px; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink); background: transparent; font: 12px/1 Helvetica, Arial, sans-serif; text-decoration: none; }
+.painting-dialog__visit:hover, .painting-dialog__visit:focus-visible { color: var(--paper); background: var(--ink); outline: none; }
 @media (max-width: 720px) { .graphic-section { padding: 46px 20px 0; } .graphic-section--palmier { padding: 46px 20px 54px; } .graphic-section > h2 { font-size: 27px; } .palmier-project { grid-template-columns: 1fr; max-width: 360px; } .palmier-project__side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; height: auto; } .palmier-project__frame { grid-row: 1; } .palmier-project iframe { height: 1000px; } .palmier-menus { width: calc(100% + 40px); margin-left: -20px; } }

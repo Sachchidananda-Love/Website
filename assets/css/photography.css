@@ -1,1 +1,8 @@
 @import url("paintings.css");
+
+/* Keep portrait work inside the same visual band as the landscape row. */
+.photography-card--portrait .painting-card__preview img {
+  width: 100%;
+  height: 71.1%;
+  object-fit: contain;
+}

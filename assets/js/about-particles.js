@@ -359,7 +359,11 @@
     pointer.lastTime = now;
     pointer.type = event.pointerType || 'mouse';
     pointer.active = forceActive || pointer.type !== 'touch';
-    pointer.intensity = pointer.type === 'touch' ? 0.34 : 0.72 + pointer.speed * 0.58;
+    // A fingertip obscures more of the figure than a cursor, so touch needs a
+    // wider, stronger response to feel equally direct on a small screen.
+    pointer.intensity = pointer.type === 'touch'
+      ? 1.05 + pointer.speed * 0.75
+      : 0.72 + pointer.speed * 0.58;
     pointerNdc.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
     pointerNdc.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
     raycaster.setFromCamera(pointerNdc, camera);
@@ -420,9 +424,9 @@
     const deltaScale = Math.min(2, delta * 60);
     const springBase = 0.016 * deltaScale;
     const drag = Math.pow(0.91, deltaScale);
-    const radius = pointer.type === 'touch' ? 0.48 : 0.64;
+    const radius = pointer.type === 'touch' ? 0.92 : 0.64;
     const radiusSquared = radius * radius;
-    const pointerForce = pointer.intensity * (pointer.type === 'touch' ? 0.021 : 0.036) * deltaScale;
+    const pointerForce = pointer.intensity * (pointer.type === 'touch' ? 0.13 : 0.036) * deltaScale;
     const rayOrigin = localRay.origin;
     const rayDirection = localRay.direction;
     const floatStrength = 0.00052 * deltaScale;
@@ -494,8 +498,8 @@
       positions[offset + 2] += velocities[offset + 2] * deltaScale;
     }
 
-    if (pointer.active) pointer.intensity *= Math.pow(0.972, deltaScale);
-    else pointer.intensity *= Math.pow(0.9, deltaScale);
+    if (pointer.active) pointer.intensity *= Math.pow(pointer.type === 'touch' ? 0.985 : 0.972, deltaScale);
+    else pointer.intensity *= Math.pow(pointer.type === 'touch' ? 0.86 : 0.9, deltaScale);
     scroll.impulse *= Math.pow(0.78, deltaScale);
     positionAttribute.needsUpdate = true;
   };

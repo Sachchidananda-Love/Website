@@ -11,7 +11,11 @@
 
   const normalCursor = `${cursorPath}cursor_1.png`;
   const hoverCursor = `${cursorPath}cursorhover_1.png`;
+  const zoomInCursor = `${cursorPath}zoomin-cursor.png`;
+  const zoomOutCursor = `${cursorPath}zoomout-cursor.png`;
   new Image().src = hoverCursor;
+  new Image().src = zoomInCursor;
+  new Image().src = zoomOutCursor;
   const placeCursorInTopLayer = () => {
     const openDialog = [...document.querySelectorAll('dialog[open]')].at(-1);
     const host = openDialog || document.body;
@@ -25,7 +29,11 @@
     placeCursorInTopLayer();
     cursor.style.left = `${event.clientX}px`;
     cursor.style.top = `${event.clientY}px`;
-    cursor.src = event.target.closest('a, button, input, select, summary, [role="button"], [role="link"], [role="slider"], [data-lang-switcher], .tile, .large-button, .section-dropdown, .language-switcher, .painting-card__media, .painting-dialog__stage, .gallery-artwork, .gallery-artwork__surface') ? hoverCursor : normalCursor;
+    const overZoomControl = event.target.closest('.artwork-zoom-controls, .painting-dialog__zoom-controls');
+    const zoomStage = overZoomControl ? null : event.target.closest('.painting-dialog__stage.has-zoom, .gallery-dialog__stage.has-zoom');
+    cursor.src = zoomStage
+      ? (zoomStage.dataset.zoomCursor === 'out' ? zoomOutCursor : zoomInCursor)
+      : event.target.closest('a, button, input, select, summary, [role="button"], [role="link"], [role="slider"], [data-lang-switcher], .tile, .large-button, .section-dropdown, .language-switcher, .artwork-zoom-controls, .painting-dialog__zoom-controls, .painting-card__media, .painting-dialog__stage, .gallery-artwork, .gallery-artwork__surface') ? hoverCursor : normalCursor;
     cursor.classList.add('site-cursor--visible');
   };
   document.addEventListener('pointermove', moveCursor, { passive: true });

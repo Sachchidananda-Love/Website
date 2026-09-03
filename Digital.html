@@ -13,7 +13,7 @@
     <header class="paintings-header">
         <a class="paintings-back" href="index.html">back</a>
         <div class="paintings-header__content">
-            <div><p class="paintings-kicker">Calem Anderson-Barwin</p><h1>Digital</h1><p class="paintings-intro">Digital illustration, collage, and experimental image-making.</p></div>
+            <div><h1>Digital</h1><p class="paintings-intro">Digital illustration, collage, and experimental image-making.</p></div>
             <form class="paintings-controls" data-digital-controls aria-label="Filter and sort digital artwork">
                 <details class="paintings-filter" data-filter-menu="medium"><summary>Medium <span>All media</span></summary><div class="paintings-filter__options"><label><input type="checkbox" name="medium" value="Adobe Illustrator"> <span>Adobe Illustrator</span></label><label><input type="checkbox" name="medium" value="Adobe Photoshop"> <span>Adobe Photoshop</span></label><label><input type="checkbox" name="medium" value="Apple Keynote"> <span>Apple Keynote</span></label></div></details>
                 <label>Sort by<select name="sort"><option value="default">Default order</option><option value="date-desc">Date: newest to oldest</option><option value="date-asc">Date: oldest to newest</option><option value="title">Title A–Z</option></select></label>
@@ -24,6 +24,7 @@
     <template data-digital-template><article class="painting-card"><div class="painting-card__media"><div class="painting-card__preview"></div><button class="painting-card__fullscreen" type="button" aria-label="Open fullscreen"><img src="assets/img/1x/fullscreen.png" alt=""></button></div><div class="painting-card__body"><h2 class="painting-card__title"></h2><ul class="painting-card__tags" aria-label="Artwork tags"></ul></div></article></template>
     <dialog class="painting-dialog" data-digital-dialog><button class="painting-dialog__close" type="button" aria-label="Close viewer">×</button><div class="painting-dialog__content" data-digital-dialog-content></div></dialog>
     <script src="assets/js/infinite-gallery-manifest.js"></script>
+    <script src="assets/js/artwork-zoom.js"></script>
     <script src="assets/js/digital.js"></script>
     <script src="assets/js/site-cursor.js"></script>
 </body>

@@ -54,7 +54,8 @@
       const section = document.createElement('section'); section.className = 'painting-dialog__work'; section.dataset.digitalItem = work.id;
       const stage = document.createElement('div'); stage.className = 'painting-dialog__stage'; const info = document.createElement('div'); info.className = 'painting-dialog__info'; const heading = document.createElement('h2'); heading.textContent = work.title; info.append(heading);
       let viewIndex = workIndex === 0 ? selectedView : 0;
-      const render = () => { stage.classList.remove('is-zoomed'); stage.replaceChildren(mediaElement(work.media[viewIndex], work.title)); };
+      const zoom = window.createArtworkZoom(stage);
+      const render = () => { zoom.render(mediaElement(work.media[viewIndex], work.title)); };
       render();
       if (work.media.length > 1) { const views = document.createElement('div'); views.className = 'painting-dialog__views'; work.media.forEach((_, index) => { const button = document.createElement('button'); button.textContent = index + 1; if (index === viewIndex) button.setAttribute('aria-current', 'true'); button.addEventListener('click', () => { viewIndex = index; render(); views.querySelectorAll('button').forEach((view, position) => position === index ? view.setAttribute('aria-current', 'true') : view.removeAttribute('aria-current')); }); views.append(button); }); info.append(views); }
       section.append(stage, info); dialogContent.append(section);

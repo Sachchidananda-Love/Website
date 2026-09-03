@@ -4,6 +4,9 @@
   const plane = document.querySelector('[data-gallery-plane]');
   const status = document.querySelector('[data-gallery-status]');
   const hint = document.querySelector('.gallery-hint');
+  const filterHost = document.querySelector('[data-gallery-filters]');
+  const surpriseButton = document.querySelector('[data-gallery-surprise]');
+  const count = document.querySelector('[data-gallery-count]');
   const dialog = document.querySelector('[data-gallery-dialog]');
   const dialogContent = document.querySelector('[data-gallery-dialog-content]');
   if (!manifest?.items?.length || !viewport || !plane) return;
@@ -23,10 +26,18 @@
   let playbackSyncFrame = null;
   let syncVisibleVideos = () => {};
   let dragging = false;
+  let dragStarted = false;
   let dragPointerId = null;
+  let dragOriginArtwork = null;
+  let dragDistance = 0;
+  let suppressArtworkClickUntil = 0;
   let dragVelocity = { x: 0, y: 0 };
   let previousPointer = { x: 0, y: 0, time: performance.now() };
   let previousFrameTime = performance.now();
+  let cameraTarget = null;
+  let featuredArtwork = null;
+
+  if (count) count.textContent = `${manifest.itemCount || manifest.items.length} works · endless field`;
 
   const dismissHint = () => {
     if (!hint || hint.classList.contains('is-dismissed')) return;
@@ -74,7 +85,8 @@
     info.append(heading, collection);
     if (definition.details) { const details = document.createElement('p'); details.textContent = definition.details; info.append(details); }
     if (definition.description) { const description = document.createElement('p'); description.textContent = definition.description; info.append(description); }
-    const render = () => stage.replaceChildren(dialogMediaElement(item.media[mediaIndex], title));
+    const zoom = window.createArtworkZoom(stage);
+    const render = () => zoom.render(dialogMediaElement(item.media[mediaIndex], title));
     render();
     if (item.media.length > 1) {
       const views = document.createElement('div'); views.className = 'gallery-dialog__views';
@@ -261,6 +273,17 @@
     const stage = document.createElement('div');
     stage.className = 'gallery-artwork__stage';
     surface.append(stage);
+
+    const caption = document.createElement('div');
+    caption.className = 'gallery-artwork__caption';
+    const captionTitle = document.createElement('span');
+    captionTitle.className = 'gallery-artwork__caption-title';
+    captionTitle.textContent = definitionFor(item).title || item.title;
+    const captionCollection = document.createElement('span');
+    captionCollection.className = 'gallery-artwork__caption-collection';
+    captionCollection.textContent = item.collection;
+    caption.append(captionTitle, captionCollection);
+    surface.append(caption);
     article.append(surface);
 
     const artwork = {
@@ -311,8 +334,10 @@
         const rect = article.getBoundingClientRect();
         const horizontal = clamp((event.clientX - rect.left) / rect.width - 0.5, -0.5, 0.5);
         const vertical = clamp((event.clientY - rect.top) / rect.height - 0.5, -0.5, 0.5);
-        surface.style.setProperty('--tilt-x', `${(-vertical * 1.1).toFixed(3)}deg`);
-        surface.style.setProperty('--tilt-y', `${(horizontal * 1.1).toFixed(3)}deg`);
+        surface.style.setProperty('--tilt-x', `${(-vertical * 6).toFixed(3)}deg`);
+        surface.style.setProperty('--tilt-y', `${(horizontal * 6).toFixed(3)}deg`);
+        surface.style.setProperty('--shine-x', `${((horizontal + 0.5) * 100).toFixed(1)}%`);
+        surface.style.setProperty('--shine-y', `${((vertical + 0.5) * 100).toFixed(1)}%`);
       });
     }
     article.addEventListener('pointerenter', () => syncVisibleVideos());
@@ -325,6 +350,10 @@
     article.addEventListener('focusout', () => syncVisibleVideos());
     surface.addEventListener('click', (event) => {
       if (event.target.closest('button')) return;
+      if (performance.now() < suppressArtworkClickUntil) {
+        event.preventDefault();
+        return;
+      }
       openArtworkDialog(item, artwork.mediaIndex);
     });
     article.addEventListener('keydown', (event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); openArtworkDialog(item, artwork.mediaIndex); } });
@@ -359,6 +388,72 @@
     window.sessionStorage.removeItem('infinite-gallery-entry-media');
   } catch {}
   const artworks = layoutItems.map(createArtwork);
+
+  const cancelCameraFlight = () => { cameraTarget = null; };
+  const closestArtwork = (candidates) => candidates.reduce((closest, artwork) => {
+    const rect = artwork.article.getBoundingClientRect();
+    const distance = Math.hypot(
+      rect.left + rect.width / 2 - window.innerWidth / 2,
+      rect.top + rect.height / 2 - window.innerHeight / 2
+    );
+    return !closest || distance < closest.distance ? { artwork, distance } : closest;
+  }, null)?.artwork;
+  const flyToArtwork = (artwork) => {
+    if (!artwork) return;
+    const rect = artwork.article.getBoundingClientRect();
+    cameraTarget = {
+      x: camera.x - (rect.left + rect.width / 2 - window.innerWidth / 2),
+      y: camera.y - (rect.top + rect.height / 2 - window.innerHeight / 2),
+      artwork
+    };
+    camera.velocityX = 0;
+    camera.velocityY = 0;
+    dismissHint();
+  };
+
+  let activeCategory = 'all';
+  const setCategory = (category) => {
+    cancelCameraFlight();
+    activeCategory = category;
+    const candidates = artworks.filter((artwork) => category === 'all' || artwork.item.category === category);
+    artworks.forEach((artwork) => {
+      const visible = candidates.includes(artwork);
+      artwork.article.classList.toggle('is-filtered-out', !visible);
+      artwork.article.tabIndex = visible ? 0 : -1;
+    });
+    filterHost?.querySelectorAll('button').forEach((button) => {
+      button.setAttribute('aria-pressed', String(button.dataset.category === category));
+    });
+    if (category !== 'all') flyToArtwork(closestArtwork(candidates));
+    status.textContent = category === 'all'
+      ? `Showing all ${artworks.length} works`
+      : `Showing ${candidates.length} works from ${candidates[0]?.item.collection || category}`;
+  };
+
+  if (filterHost) {
+    const categories = [{ id: 'all', label: 'all' }, ...manifest.collections];
+    categories.forEach((category) => {
+      const button = document.createElement('button');
+      button.className = 'gallery-filter';
+      button.type = 'button';
+      button.dataset.category = category.id;
+      button.textContent = category.label;
+      button.setAttribute('aria-pressed', String(category.id === 'all'));
+      button.addEventListener('click', () => setCategory(category.id));
+      filterHost.append(button);
+    });
+  }
+
+  surpriseButton?.addEventListener('click', () => {
+    const candidates = artworks.filter((artwork) => activeCategory === 'all' || artwork.item.category === activeCategory);
+    if (!candidates.length) return;
+    let next = candidates[Math.floor(Math.random() * candidates.length)];
+    if (next === featuredArtwork && candidates.length > 1) {
+      next = candidates[(candidates.indexOf(next) + 1) % candidates.length];
+    }
+    flyToArtwork(next);
+    status.textContent = `Moving to ${definitionFor(next.item).title || next.item.title}`;
+  });
   const entryArtwork = entryMedia
     ? artworks.find((artwork) => artwork.item.media.some((media) => media.src === entryMedia))
     : null;
@@ -471,34 +566,59 @@
   const stopDragging = (event) => {
     if (!dragging || (event && event.pointerId !== dragPointerId)) return;
     const velocityFactor = performance.now() - previousPointer.time > 70 ? 0.12 : 0.48;
-    camera.velocityX = reducedMotion ? 0 : clamp(dragVelocity.x, -1.45, 1.45) * velocityFactor;
-    camera.velocityY = reducedMotion ? 0 : clamp(dragVelocity.y, -1.45, 1.45) * velocityFactor;
+    camera.velocityX = !dragStarted || reducedMotion ? 0 : clamp(dragVelocity.x, -1.45, 1.45) * velocityFactor;
+    camera.velocityY = !dragStarted || reducedMotion ? 0 : clamp(dragVelocity.y, -1.45, 1.45) * velocityFactor;
     const releasedPointerId = dragPointerId;
+    if (dragStarted && dragOriginArtwork) suppressArtworkClickUntil = performance.now() + 420;
     dragging = false;
+    dragStarted = false;
     dragPointerId = null;
+    dragOriginArtwork = null;
+    dragDistance = 0;
     viewport.classList.remove('is-dragging');
-    if (viewport.hasPointerCapture(releasedPointerId)) viewport.releasePointerCapture(releasedPointerId);
+    if (releasedPointerId !== null && viewport.hasPointerCapture(releasedPointerId)) viewport.releasePointerCapture(releasedPointerId);
   };
 
   viewport.addEventListener('pointerdown', (event) => {
-    if (!event.isPrimary || event.button !== 0 || event.target.closest('.gallery-artwork')) return;
-    dismissHint();
+    if (!event.isPrimary || event.button !== 0 || event.target.closest('button, a')) return;
+    cancelCameraFlight();
     dragging = true;
+    dragStarted = !event.target.closest('.gallery-artwork');
     dragPointerId = event.pointerId;
+    dragOriginArtwork = event.target.closest('.gallery-artwork');
+    dragDistance = 0;
     dragVelocity = { x: 0, y: 0 };
     camera.velocityX = 0;
     camera.velocityY = 0;
     previousPointer = { x: event.clientX, y: event.clientY, time: performance.now() };
-    viewport.classList.add('is-dragging');
-    viewport.setPointerCapture(event.pointerId);
+    if (dragStarted) {
+      dismissHint();
+      viewport.classList.add('is-dragging');
+      viewport.setPointerCapture(event.pointerId);
+    }
     viewport.focus({ preventScroll: true });
   });
   viewport.addEventListener('pointermove', (event) => {
+    if (finePointer) {
+      viewport.style.setProperty('--pointer-x', `${event.clientX}px`);
+      viewport.style.setProperty('--pointer-y', `${event.clientY}px`);
+    }
     if (!dragging || event.pointerId !== dragPointerId) return;
     const now = performance.now();
     const elapsed = clamp(now - previousPointer.time, 8, 42);
     const deltaX = event.clientX - previousPointer.x;
     const deltaY = event.clientY - previousPointer.y;
+    dragDistance += Math.hypot(deltaX, deltaY);
+    if (!dragStarted && dragDistance < 7) {
+      previousPointer = { x: event.clientX, y: event.clientY, time: now };
+      return;
+    }
+    if (!dragStarted) {
+      dragStarted = true;
+      dismissHint();
+      viewport.classList.add('is-dragging');
+      viewport.setPointerCapture(event.pointerId);
+    }
     camera.x += deltaX;
     camera.y += deltaY;
     dragVelocity.x = dragVelocity.x * 0.58 + (deltaX / elapsed) * 0.42;
@@ -511,6 +631,7 @@
 
   viewport.addEventListener('wheel', (event) => {
     event.preventDefault();
+    cancelCameraFlight();
     dismissHint();
     const deltaScale = event.deltaMode === WheelEvent.DOM_DELTA_LINE
       ? 16
@@ -525,6 +646,7 @@
     if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
     if (event.target.closest('button, a')) return;
     event.preventDefault();
+    cancelCameraFlight();
     dismissHint();
     pressedKeys.add(event.key);
   });
@@ -538,7 +660,21 @@
   const animate = (time) => {
     const delta = Math.min(34, time - previousFrameTime);
     previousFrameTime = time;
-    if (!dragging) {
+    if (!dragging && cameraTarget) {
+      const response = reducedMotion ? 1 : 1 - Math.exp(-delta / 180);
+      camera.x += (cameraTarget.x - camera.x) * response;
+      camera.y += (cameraTarget.y - camera.y) * response;
+      if (Math.hypot(cameraTarget.x - camera.x, cameraTarget.y - camera.y) < 0.7) {
+        camera.x = cameraTarget.x;
+        camera.y = cameraTarget.y;
+        featuredArtwork?.article.classList.remove('is-featured');
+        featuredArtwork = cameraTarget.artwork;
+        featuredArtwork.article.classList.remove('is-featured');
+        void featuredArtwork.article.offsetWidth;
+        featuredArtwork.article.classList.add('is-featured');
+        cameraTarget = null;
+      }
+    } else if (!dragging) {
       let directionX = (pressedKeys.has('ArrowLeft') ? 1 : 0) - (pressedKeys.has('ArrowRight') ? 1 : 0);
       let directionY = (pressedKeys.has('ArrowUp') ? 1 : 0) - (pressedKeys.has('ArrowDown') ? 1 : 0);
       const directionLength = Math.hypot(directionX, directionY);

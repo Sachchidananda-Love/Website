@@ -1605,10 +1605,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-1",
       "category": "photography",
       "collection": "Photography",
-      "title": "001",
+      "title": "Bird",
       "media": [
         {
-          "src": "assets/img/Photography/001.png",
+          "src": "assets/img/Photography/Bird.png",
           "type": "image",
           "width": 3456,
           "height": 2460
@@ -1619,10 +1619,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-2",
       "category": "photography",
       "collection": "Photography",
-      "title": "002",
+      "title": "Frog",
       "media": [
         {
-          "src": "assets/img/Photography/002.png",
+          "src": "assets/img/Photography/Frog.png",
           "type": "image",
           "width": 3456,
           "height": 2460
@@ -1633,10 +1633,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-3",
       "category": "photography",
       "collection": "Photography",
-      "title": "003",
+      "title": "Bong",
       "media": [
         {
-          "src": "assets/img/Photography/003.png",
+          "src": "assets/img/Photography/Bong.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1647,10 +1647,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-4",
       "category": "photography",
       "collection": "Photography",
-      "title": "004",
+      "title": "Lauriane",
       "media": [
         {
-          "src": "assets/img/Photography/004.png",
+          "src": "assets/img/Photography/Lauriane.png",
           "type": "image",
           "width": 3456,
           "height": 5376
@@ -1661,10 +1661,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-5",
       "category": "photography",
       "collection": "Photography",
-      "title": "005",
+      "title": "Beaver",
       "media": [
         {
-          "src": "assets/img/Photography/005.png",
+          "src": "assets/img/Photography/Beaver.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1675,10 +1675,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-6",
       "category": "photography",
       "collection": "Photography",
-      "title": "006",
+      "title": "Lights",
       "media": [
         {
-          "src": "assets/img/Photography/006.png",
+          "src": "assets/img/Photography/Lights.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1689,10 +1689,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-7",
       "category": "photography",
       "collection": "Photography",
-      "title": "007",
+      "title": "Canoe",
       "media": [
         {
-          "src": "assets/img/Photography/007.png",
+          "src": "assets/img/Photography/Canoe.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1703,10 +1703,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-8",
       "category": "photography",
       "collection": "Photography",
-      "title": "008",
+      "title": "Bird 2",
       "media": [
         {
-          "src": "assets/img/Photography/008.png",
+          "src": "assets/img/Photography/Bird 2.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1717,10 +1717,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-9",
       "category": "photography",
       "collection": "Photography",
-      "title": "009",
+      "title": "Street Light",
       "media": [
         {
-          "src": "assets/img/Photography/009.png",
+          "src": "assets/img/Photography/Street Light.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1731,10 +1731,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-10",
       "category": "photography",
       "collection": "Photography",
-      "title": "010",
+      "title": "Web",
       "media": [
         {
-          "src": "assets/img/Photography/010.png",
+          "src": "assets/img/Photography/Web.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1745,10 +1745,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-11",
       "category": "photography",
       "collection": "Photography",
-      "title": "011",
+      "title": "Lens",
       "media": [
         {
-          "src": "assets/img/Photography/011.png",
+          "src": "assets/img/Photography/Lens.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1759,10 +1759,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-12",
       "category": "photography",
       "collection": "Photography",
-      "title": "012",
+      "title": "Spin",
       "media": [
         {
-          "src": "assets/img/Photography/012.png",
+          "src": "assets/img/Photography/Spin.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1773,10 +1773,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-13",
       "category": "photography",
       "collection": "Photography",
-      "title": "013",
+      "title": "Frozen",
       "media": [
         {
-          "src": "assets/img/Photography/013.png",
+          "src": "assets/img/Photography/Frozen.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1787,10 +1787,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-14",
       "category": "photography",
       "collection": "Photography",
-      "title": "014",
+      "title": "Bug",
       "media": [
         {
-          "src": "assets/img/Photography/014.png",
+          "src": "assets/img/Photography/Bug.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1801,10 +1801,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-15",
       "category": "photography",
       "collection": "Photography",
-      "title": "017",
+      "title": "Erik & Jeremie",
       "media": [
         {
-          "src": "assets/img/Photography/017.png",
+          "src": "assets/img/Photography/Erik & Jeremie.png",
           "type": "image",
           "width": 1191,
           "height": 845
@@ -1815,10 +1815,10 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "photography-16",
       "category": "photography",
       "collection": "Photography",
-      "title": "018",
+      "title": "Kiwi",
       "media": [
         {
-          "src": "assets/img/Photography/018.png",
+          "src": "assets/img/Photography/Kiwi.png",
           "type": "image",
           "width": 761,
           "height": 1201

@@ -12,14 +12,20 @@
     <script src="assets/js/site-loader.js"></script>
     <header class="paintings-header">
         <a class="paintings-back" href="index.html">back</a>
-        <p class="paintings-kicker">Calem Anderson-Barwin</p>
-        <h1>Photography</h1>
-        <p class="paintings-intro">Photographs and visual studies.</p>
+        <div class="paintings-header__content">
+            <div><h1>Photography</h1><p class="paintings-intro">Photographs and visual studies. These images are left unedited after they are taken.</p></div>
+            <form class="paintings-controls" data-photography-controls aria-label="Filter and sort photography">
+                <details class="paintings-filter" data-filter-menu="subject"><summary>Subject <span>All subjects</span></summary><div class="paintings-filter__options"><label><input type="checkbox" name="subject" value="People"> <span>People</span></label><label><input type="checkbox" name="subject" value="Animals"> <span>Animals</span></label><label><input type="checkbox" name="subject" value="Nature"> <span>Nature</span></label></div></details>
+                <details class="paintings-filter" data-filter-menu="camera"><summary>Camera <span>All cameras</span></summary><div class="paintings-filter__options"><label><input type="checkbox" name="camera" value="Canon Rebel T5i"> <span>Canon Rebel T5i</span></label><label><input type="checkbox" name="camera" value="Canon EOS 7D"> <span>Canon EOS 7D</span></label></div></details>
+                <label>Sort by<select name="sort"><option value="default">Default order</option><option value="year-asc">Year: oldest to newest</option><option value="year-desc">Year: newest to oldest</option><option value="title-asc">Title: A to Z</option></select></label>
+            </form>
+        </div>
     </header>
     <main><section class="paintings-grid" data-photography-grid aria-label="Photography"></section></main>
-    <template data-photography-template><article class="painting-card"><div class="painting-card__media"><div class="painting-card__preview"></div><button class="painting-card__fullscreen" type="button" aria-label="Open fullscreen"><img src="assets/img/1x/fullscreen.png" alt=""></button></div><div class="painting-card__body"><h2 class="painting-card__title"></h2></div></article></template>
+    <template data-photography-template><article class="painting-card"><div class="painting-card__media"><div class="painting-card__preview"></div><button class="painting-card__fullscreen" type="button" aria-label="Open fullscreen"><img src="assets/img/1x/fullscreen.png" alt=""></button></div><div class="painting-card__body"><h2 class="painting-card__title"></h2><p class="painting-card__details"></p><p class="painting-card__description"></p><ul class="painting-card__tags" aria-label="Photography tags"></ul></div></article></template>
     <dialog class="painting-dialog" data-photography-dialog><button class="painting-dialog__close" type="button" aria-label="Close viewer">×</button><div class="painting-dialog__content" data-photography-dialog-content></div></dialog>
     <script src="assets/js/infinite-gallery-manifest.js"></script>
+    <script src="assets/js/artwork-zoom.js"></script>
     <script src="assets/js/photography.js"></script>
     <script src="assets/js/site-cursor.js"></script>
 </body>
