@@ -183,7 +183,9 @@
           delete stage.dataset.zoomCursor;
         }
         const viewArrows = [...stage.querySelectorAll('.painting-dialog__view-arrow')];
-        stage.replaceChildren(mediaElement(work.media[activeIndex], metadata.title || work.title), ...viewArrows);
+        const media = mediaElement(work.media[activeIndex], metadata.title || work.title);
+        stage.replaceChildren(media, ...viewArrows);
+        screenWhiteBackground(media);
         if (work.media[activeIndex].type === 'image') setZoomAmount(zoomAmount);
       };
       stage.addEventListener('click', () => {
@@ -252,7 +254,7 @@
     const card = fragment.querySelector('.painting-card');
     const media = fragment.querySelector('.painting-card__media');
     const previewContainer = fragment.querySelector('.painting-card__preview');
-    const fullscreenButton = fragment.querySelector('.painting-card__fullscreen');
+    const navigation = fragment.querySelector('.painting-card__navigation');
     const title = metadata.title || item.title;
     let previewIndex = 0;
     const showPreview = () => {
@@ -261,10 +263,12 @@
       if (preview.tagName === 'VIDEO') { preview.controls = false; preview.autoplay = true; preview.loop = true; }
       previewContainer.append(preview);
       screenWhiteBackground(preview, media);
+      navigation?.querySelectorAll('.painting-card__dot').forEach((dot, index) => {
+        if (index === previewIndex) dot.setAttribute('aria-current', 'true');
+        else dot.removeAttribute('aria-current');
+      });
     };
     showPreview();
-    fullscreenButton.setAttribute('aria-label', `Open ${title} fullscreen`);
-    fullscreenButton.addEventListener('click', () => openDialog(item, previewIndex));
     media.addEventListener('click', (event) => {
       if (!event.target.closest('button')) openDialog(item, previewIndex);
     });
@@ -277,9 +281,21 @@
         const icon = document.createElement('img'); icon.src = asset; icon.alt = '';
         arrow.append(icon);
         arrow.addEventListener('click', () => { previewIndex = (previewIndex + (direction === 'next' ? 1 : -1) + item.media.length) % item.media.length; showPreview(); });
-        media.append(arrow);
+        navigation.append(arrow);
       };
       addArrow('previous', 'assets/img/leftarrow.png', 'Previous');
+      const dots = document.createElement('div');
+      dots.className = 'painting-card__dots';
+      item.media.forEach((_, index) => {
+        const dot = document.createElement('button');
+        dot.className = 'painting-card__dot';
+        dot.type = 'button';
+        dot.setAttribute('aria-label', `View ${index + 1} of ${item.media.length} for ${title}`);
+        if (index === previewIndex) dot.setAttribute('aria-current', 'true');
+        dot.addEventListener('click', () => { previewIndex = index; showPreview(); });
+        dots.append(dot);
+      });
+      navigation.append(dots);
       addArrow('next', 'assets/img/rightarrow.png', 'Next');
     }
     fragment.querySelector('.painting-card__title').textContent = title;

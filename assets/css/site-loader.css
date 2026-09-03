@@ -32,6 +32,19 @@ html.site-loader-active body {
   pointer-events: none;
 }
 
+.site-loader__content {
+  display: grid;
+  justify-items: center;
+  grid-template-rows: calc(var(--loader-size) * 1.5) auto;
+  gap: 14px;
+}
+
+.site-loader__label {
+  margin: 0;
+  color: #161616;
+  font: 16px/1 Helvetica, Arial, sans-serif;
+}
+
 .site-loader__scene,
 .site-loader__cube {
   width: var(--loader-size);
@@ -41,6 +54,10 @@ html.site-loader-active body {
 }
 
 .site-loader__scene {
+  display: grid;
+  place-items: center;
+  width: calc(var(--loader-size) * 1.5);
+  height: calc(var(--loader-size) * 1.5);
   perspective: 700px;
 }
 

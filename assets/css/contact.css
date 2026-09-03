@@ -3,8 +3,9 @@
 :root { color-scheme: light; }
 * { box-sizing: border-box; }
 body { margin: 0; overflow: hidden; background: #f8f6f2; color: #161616; font-family: Helvetica, Arial, sans-serif; }
-.contact-back { position: fixed; z-index: 3; top: max(22px, env(safe-area-inset-top)); left: max(24px, env(safe-area-inset-left)); color: inherit; font-size: 17px; text-decoration: none; opacity: .72; transition: opacity 160ms ease; }
-.contact-back:hover, .contact-back:focus-visible { opacity: 1; }
+.contact-back { position: fixed; z-index: 3; top: max(22px, env(safe-area-inset-top)); left: max(24px, env(safe-area-inset-left)); padding: 6px 8px; color: inherit; background: #f8f6f2; font-size: 17px; text-decoration: none; opacity: 1; transition: color 160ms ease; }
+.contact-back:hover, .contact-back:focus-visible, .contact-back:active { color: #ff7a1a; }
+.contact-back:focus-visible { outline: 1px solid currentColor; outline-offset: 6px; }
 .social-field { position: relative; width: 100vw; height: 100dvh; }
 .social-orbit { --offset-x: 0px; --offset-y: 0px; --drift-x: 0px; --drift-y: 0px; position: absolute; display: grid; place-items: center; width: clamp(38px, 5vw, 69px); aspect-ratio: 1; color: #161616; text-decoration: none; transform: translate3d(calc(var(--offset-x) + var(--drift-x)), calc(var(--offset-y) + var(--drift-y)), 0); transition: width 220ms ease; }
 .social-orbit::after { position: absolute; z-index: 0; inset: -70px; content: ''; }

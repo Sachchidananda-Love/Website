@@ -37,7 +37,7 @@
     loader.className = 'site-loader';
     loader.setAttribute('role', 'status');
     loader.setAttribute('aria-label', 'Loading page');
-    loader.innerHTML = `<div class="site-loader__scene"><div class="site-loader__cube" aria-hidden="true">${faces.map((face) => `<div class="site-loader__face site-loader__face--${face}"></div>`).join('')}</div></div>`;
+    loader.innerHTML = `<div class="site-loader__content"><div class="site-loader__scene"><div class="site-loader__cube" aria-hidden="true">${faces.map((face) => `<div class="site-loader__face site-loader__face--${face}"></div>`).join('')}</div></div><p class="site-loader__label">Loading…</p></div>`;
     document.body.append(loader);
     return loader;
   };

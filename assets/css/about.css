@@ -92,8 +92,13 @@ body.about-particles-page .about-particle-stage.is-webgl .about-particle-stage__
 body.about-particles-page .about-particle-stage__fallback {
   position: absolute;
   inset: 4% 12%;
-  opacity: 0.42;
+  /* Do not reveal the static silhouette while WebGL is still starting. */
+  opacity: 0;
   transition: opacity 500ms ease;
+}
+
+body.about-particles-page .about-particle-stage.is-fallback .about-particle-stage__fallback {
+  opacity: 0.42;
 }
 
 body.about-particles-page .about-particle-stage.is-webgl .about-particle-stage__fallback {
