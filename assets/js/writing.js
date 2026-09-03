@@ -60,13 +60,16 @@
   const escape = (s) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const open = (work) => {
     content.replaceChildren();
+    dialog.onpointerdown = null;
     if (work.title !== 'I’m Stuck') content.innerHTML = '<article class="writing-dialog__work"><div class="writing-dialog__visual"><img src="' + escape(work.full) + '" alt="' + escape(work.title) + '"></div><div class="writing-dialog__copy"><h2>' + escape(work.title) + '</h2><p>' + escape(work.description) + '</p></div></article>';
     else {
       const article = document.createElement('article'); article.className = 'writing-reader';
       const body = document.createElement('div'); body.className = 'writing-reader__poem'; body.innerHTML = '<h2>I’m Stuck</h2><p></p>';
-      const aside = document.createElement('aside'); aside.className = 'writing-reader__notes is-empty'; aside.innerHTML = '<h3>Annotations</h3><p>Select an underlined phrase to read its original document comment.</p>';
+      const aside = document.createElement('aside'); aside.className = 'writing-reader__notes is-empty';
+      const closeAnnotation = () => { paragraph.querySelectorAll('.writing-annotation').forEach((item) => item.classList.remove('is-selected')); aside.classList.add('is-empty'); aside.innerHTML = '<h3>Annotations</h3><p>Select an underlined phrase to read its original document comment.</p>'; };
       const paragraph = body.querySelector('p'); const found = Object.keys(annotations).map((q) => [q, poem.toLowerCase().indexOf(q.toLowerCase())]).filter(([, index]) => index >= 0).sort((a, b) => a[1] - b[1]); let at = 0;
-      found.forEach(([quote, index]) => { paragraph.append(document.createTextNode(poem.slice(at, index))); const button = document.createElement('button'); button.className = 'writing-annotation'; button.type = 'button'; button.textContent = poem.slice(index, index + quote.length); button.onclick = () => { paragraph.querySelectorAll('.writing-annotation').forEach((item) => item.classList.remove('is-selected')); button.classList.add('is-selected'); aside.classList.remove('is-empty'); aside.innerHTML = '<h3>Annotation</h3><blockquote>“' + escape(quote) + '”</blockquote><p>' + escape(annotations[quote]) + '</p>'; }; paragraph.append(button); at = index + quote.length; }); paragraph.append(document.createTextNode(poem.slice(at))); article.append(body, aside); content.append(article);
+      found.forEach(([quote, index]) => { paragraph.append(document.createTextNode(poem.slice(at, index))); const button = document.createElement('button'); button.className = 'writing-annotation'; button.type = 'button'; button.textContent = poem.slice(index, index + quote.length); button.onclick = () => { paragraph.querySelectorAll('.writing-annotation').forEach((item) => item.classList.remove('is-selected')); button.classList.add('is-selected'); aside.classList.remove('is-empty'); aside.innerHTML = '<button class="writing-annotation__close" type="button" aria-label="Close annotation">×</button><h3>Annotation</h3><blockquote>“' + escape(quote) + '”</blockquote><p>' + escape(annotations[quote]) + '</p>'; aside.querySelector('.writing-annotation__close').onclick = closeAnnotation; }; paragraph.append(button); at = index + quote.length; }); paragraph.append(document.createTextNode(poem.slice(at))); article.append(body, aside); content.append(article);
+      dialog.onpointerdown = (event) => { if (!aside.classList.contains('is-empty') && !aside.contains(event.target) && !event.target.closest('.writing-annotation')) closeAnnotation(); };
     }
     dialog.showModal(); dialog.scrollTop = 0;
   };

@@ -8,6 +8,8 @@
     let controlsVisible = false;
     let slider = null;
     let controls = null;
+    let dragStart = null;
+    let ignoreNextClick = false;
 
     const setAmount = (amount) => {
       const zoomed = amount > minimum;
@@ -21,6 +23,11 @@
       if (controlsVisible || currentMedia?.tagName !== 'IMG') return;
       controlsVisible = true;
       stage.dataset.zoomCursor = 'out';
+      if (window.matchMedia('(max-width: 720px)').matches) {
+        if (zoomSource) currentMedia.src = zoomSource;
+        setAmount(175);
+        return;
+      }
       controls = document.createElement('div');
       controls.className = 'artwork-zoom-controls';
       const label = document.createElement('label');
@@ -45,7 +52,33 @@
       setAmount(minimum);
     };
 
-    stage.addEventListener('click', () => controlsVisible ? hideControls() : showControls());
+    stage.addEventListener('click', () => {
+      if (ignoreNextClick) { ignoreNextClick = false; return; }
+      controlsVisible ? hideControls() : showControls();
+    });
+    stage.addEventListener('pointerdown', (event) => {
+      if (!controlsVisible || event.button !== 0) return;
+      dragStart = { x: event.clientX, y: event.clientY, left: stage.scrollLeft, top: stage.scrollTop, moved: false };
+      stage.classList.add('is-panning');
+      stage.setPointerCapture(event.pointerId);
+    });
+    stage.addEventListener('pointermove', (event) => {
+      if (!dragStart) return;
+      const dx = event.clientX - dragStart.x;
+      const dy = event.clientY - dragStart.y;
+      if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragStart.moved = true;
+      stage.scrollLeft = dragStart.left - dx;
+      stage.scrollTop = dragStart.top - dy;
+    });
+    const endDrag = (event) => {
+      if (!dragStart) return;
+      if (dragStart.moved) ignoreNextClick = true;
+      dragStart = null;
+      stage.classList.remove('is-panning');
+      if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
+    };
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
     stage.addEventListener('keydown', (event) => {
       if ((event.key === 'Enter' || event.key === ' ') && !controlsVisible) { event.preventDefault(); showControls(); }
     });
@@ -59,7 +92,8 @@
         controls = null;
         stage.classList.remove('is-zoomed', 'has-zoom');
         stage.style.removeProperty('--zoom-scale');
-        stage.replaceChildren(media);
+        const viewArrows = [...stage.querySelectorAll('.painting-dialog__view-arrow')];
+        stage.replaceChildren(media, ...viewArrows);
         if (media.tagName === 'IMG') {
           stage.classList.add('has-zoom'); stage.dataset.zoomCursor = 'in'; stage.tabIndex = 0; stage.setAttribute('role', 'button');
           stage.setAttribute('aria-label', 'Click to show zoom controls.');

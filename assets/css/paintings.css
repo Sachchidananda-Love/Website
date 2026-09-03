@@ -7,7 +7,7 @@ button { font: inherit; }
 html { cursor: url("../img/cursor/cursor_1.png") 32 32, auto; }
 a, button, select, input, summary { cursor: url("../img/cursor/cursorhover_1.png") 32 32, pointer !important; }
 .paintings-header { max-width: 1320px; margin: 0 auto; padding: 28px 32px 54px; }
-.paintings-back { position: fixed; z-index: 20; top: max(22px, env(safe-area-inset-top)); left: max(24px, env(safe-area-inset-left)); color: inherit; font-size: 17px; text-decoration: none; opacity: .72; }
+.paintings-back { position: fixed; z-index: 20; top: max(22px, env(safe-area-inset-top)); left: max(24px, env(safe-area-inset-left)); padding: 6px 8px; color: inherit; background: var(--paper); box-shadow: none; font-size: 17px; text-decoration: none; opacity: 1; }
 .paintings-back:hover, .paintings-back:focus-visible { opacity: 1; }
 .paintings-header__content { display: flex; align-items: end; justify-content: space-between; gap: 42px; }
 .paintings-kicker { margin: 0 0 8px; color: var(--muted); font-size: 14px; letter-spacing: .06em; text-transform: uppercase; }
@@ -49,7 +49,7 @@ h1 { margin: 0; font-size: clamp(48px, 9vw, 112px); font-weight: 400; letter-spa
 .painting-card__fullscreen img { filter: invert(1); mix-blend-mode: difference; }
 .painting-card__media:hover, .painting-card__media:focus-within { z-index: 2; }
 .painting-card__media:hover .painting-card__fullscreen, .painting-card__media:hover .painting-card__previous, .painting-card__media:hover .painting-card__next, .painting-card__media:focus-within .painting-card__fullscreen, .painting-card__media:focus-within .painting-card__previous, .painting-card__media:focus-within .painting-card__next { opacity: 1; }
-.painting-card__fullscreen:focus-visible, .painting-card__previous:focus-visible, .painting-card__next:focus-visible, .painting-dialog__close:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; opacity: 1; }
+.painting-card__fullscreen:focus-visible, .painting-card__previous:focus-visible, .painting-card__next:focus-visible { outline: 2px solid var(--ink); outline-offset: -3px; opacity: 1; }
 .painting-card__body { padding: 18px 17px 22px; }
 .painting-card__title { margin: 0; font-size: 27px; font-weight: 400; line-height: 1; }
 .painting-card__details, .painting-card__description { margin: 10px 0 0; font: 13px/1.4 Arial, sans-serif; }
@@ -60,16 +60,17 @@ h1 { margin: 0; font-size: clamp(48px, 9vw, 112px); font-weight: 400; letter-spa
 .painting-card__tags li { border: 1px solid var(--line); border-radius: 999px; }
 .painting-card__tags button { display: block; padding: 4px 6px; border: 0; border-radius: inherit; color: var(--muted); background: transparent; font: 11px/1 Arial, sans-serif; cursor: pointer; }
 .painting-card__tags button:hover, .painting-card__tags button:focus-visible { color: var(--ink); background: #ebe8e1; outline: 0; }
-.painting-dialog { width: 100vw; max-width: none; height: 100dvh; max-height: none; padding: 0; border: 0; background: var(--paper); color: var(--ink); overflow-y: auto; }
+.painting-dialog { position: fixed; inset: 0; width: 100vw; max-width: none; height: 100dvh; min-height: 100dvh; max-height: none; padding: 0; margin: 0; border: 0; background: var(--paper); color: var(--ink); overflow-y: auto; }
 .painting-dialog::backdrop { background: var(--paper); }
-.painting-dialog__close { position: fixed; z-index: 3; top: 20px; right: 22px; width: 42px; height: 42px; border: 0; color: var(--ink); background: transparent; font-size: 30px; line-height: 1; cursor: pointer; }
+.painting-dialog__close { position: fixed; z-index: 3; top: 20px; right: 22px; width: 42px; height: 42px; padding: 0; border: 0; outline: 0; box-shadow: none; appearance: none; color: var(--ink); background: transparent; font-size: 30px; line-height: 1; cursor: pointer; }
 .painting-dialog__content { width: 100%; }
 .painting-dialog__work { display: grid; grid-template-columns: minmax(0, 1fr) 260px; align-items: center; gap: 28px; min-height: 100dvh; max-width: 1320px; padding: 76px 32px 48px; margin: 0 auto; }
 .painting-dialog__stage { position: relative; display: grid; place-items: center; min-height: 0; }
 .painting-dialog__stage.has-zoom { cursor: url("../img/cursor/zoomin-cursor.png") 16 16, zoom-in; }
 .painting-dialog__stage img, .painting-dialog__stage video { width: 100%; max-height: calc(100dvh - 126px); object-fit: contain; }
-.painting-dialog__stage.is-zoomed { display: block; max-height: calc(100dvh - 126px); overflow: auto; cursor: url("../img/cursor/zoomout-cursor.png") 15 16, zoom-out; }
-.painting-dialog__stage.is-zoomed img { width: var(--zoom-scale, 100%); max-width: none; max-height: none; min-width: max(1100px, var(--zoom-scale, 100%)); object-fit: initial; }
+.painting-dialog__stage.is-zoomed { position: fixed; z-index: 2; inset: 0; display: grid; width: 100vw; height: 100dvh; max-height: none; padding: 64px 20px 20px; overflow: auto; background: #fff; cursor: grab; place-items: center; }
+.painting-dialog__stage.is-zoomed.is-panning { cursor: grabbing; }
+.painting-dialog__stage.is-zoomed img { width: var(--zoom-scale, 100%); max-width: none; max-height: none; min-width: max(1100px, var(--zoom-scale, 100%)); object-fit: initial; user-select: none; -webkit-user-drag: none; }
 .painting-dialog__zoom-controls, .artwork-zoom-controls { position: sticky; bottom: 14px; left: 50%; z-index: 2; width: min(280px, calc(100% - 28px)); padding: 10px 14px; margin: -48px auto 14px; border: 1px solid rgb(22 22 22 / .16); border-radius: 999px; background: rgb(248 246 242 / .9); box-shadow: 0 5px 20px rgb(22 22 22 / .12); backdrop-filter: blur(10px); }
 .painting-dialog__zoom-controls label, .artwork-zoom-controls label { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 11px; color: var(--muted); font: 11px/1 Arial, sans-serif; letter-spacing: .05em; text-transform: uppercase; }
 .painting-dialog__zoom-controls input, .artwork-zoom-controls input { width: 100%; accent-color: var(--ink); }
@@ -79,4 +80,10 @@ h1 { margin: 0; font-size: clamp(48px, 9vw, 112px); font-weight: 400; letter-spa
 .painting-dialog__views { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 20px; }
 .painting-dialog__views button { flex: 0 0 30px; width: 30px; height: 30px; padding: 0; border: 1px solid var(--ink); border-radius: 50%; color: var(--ink); background: transparent; cursor: pointer; }
 .painting-dialog__views button[aria-current="true"] { color: var(--paper); background: var(--ink); }
-@media (max-width: 720px) { .paintings-header { padding: 22px 20px 38px; } .paintings-back { margin-bottom: 43px; } .paintings-header__content { display: block; } .paintings-controls { margin-top: 32px; } .paintings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .painting-card__media { padding: 8px; } .painting-card__fullscreen, .painting-card__previous, .painting-card__next { opacity: 1; } .painting-card__fullscreen { right: 8px; bottom: 8px; width: 30px; height: 30px; padding: 6px; } .painting-card__previous, .painting-card__next { width: 26px; height: 26px; padding: 6px; } .painting-card__previous { left: 8px; } .painting-card__next { right: 8px; } .painting-card__body { padding: 14px 12px 17px; } .painting-card__title { font-size: 22px; } .painting-card__details, .painting-card__description { font-size: 12px; } .painting-dialog__work { display: block; min-height: 100dvh; padding: 75px 20px 36px; } .painting-dialog__stage { min-height: 55dvh; } .painting-dialog__stage img, .painting-dialog__stage video { max-height: calc(100dvh - 190px); } .painting-dialog__stage.is-zoomed { max-height: calc(100dvh - 190px); } .painting-dialog__stage.is-zoomed img { min-width: 800px; } .painting-dialog__info { padding: 22px 0 0; } }
+.painting-dialog__views .painting-dialog__view-arrow { font-size: 22px; line-height: 1; }
+.painting-dialog__stage > .painting-dialog__view-arrow { position: absolute; z-index: 1; top: 50%; width: 42px; height: 42px; border: 0; border-radius: 50%; color: transparent; background: rgb(255 255 255 / .82) center / 18px 18px no-repeat; box-shadow: none; font-size: 0; line-height: 1; transform: translateY(-50%); }
+.painting-dialog__stage > .painting-dialog__view-arrow--previous { left: 10px; }
+.painting-dialog__stage > .painting-dialog__view-arrow--next { right: 10px; }
+.painting-dialog__stage > .painting-dialog__view-arrow--previous { background-image: url("../img/leftarrow.png"); }
+.painting-dialog__stage > .painting-dialog__view-arrow--next { background-image: url("../img/rightarrow.png"); }
+@media (max-width: 720px) { .paintings-header { padding: 88px 20px 38px; } .paintings-back { margin: 0; } .paintings-header h1 { font-size: clamp(58px, 16vw, 78px); } .paintings-header__content { display: block; } .paintings-controls { margin-top: 32px; } .paintings-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .painting-card:hover, .painting-card:focus-within { translate: none; } .painting-card__media { padding: 8px; } .painting-card__fullscreen, .painting-card__previous, .painting-card__next { opacity: 1; } .painting-card__fullscreen { right: 8px; bottom: 8px; width: 30px; height: 30px; padding: 6px; } .painting-card__previous, .painting-card__next { width: 26px; height: 26px; padding: 6px; } .painting-card__previous { left: 8px; } .painting-card__next { right: 8px; } .painting-card__body { padding: 14px 12px 17px; } .painting-card__title { font-size: 22px; } .painting-card__details, .painting-card__description { font-size: 12px; } .painting-dialog__work { display: block; min-height: 100dvh; padding: 75px 20px 36px; } .painting-dialog__stage { min-height: 55dvh; } .painting-dialog__stage.has-zoom::after { position: absolute; right: 8px; bottom: 8px; width: 30px; height: 30px; content: ''; background: url("../img/1x/zoomin.png") center / contain no-repeat; pointer-events: none; } .painting-dialog__stage.is-zoomed::after { display: none; } .painting-dialog__stage img, .painting-dialog__stage video { max-height: calc(100dvh - 190px); } .painting-dialog__stage.is-zoomed { padding: 64px 20px 20px; } .painting-dialog__stage.is-zoomed img { min-width: 800px; } .painting-dialog__zoom-controls, .artwork-zoom-controls { display: none; } .painting-dialog__info { padding: 22px 0 0; } }

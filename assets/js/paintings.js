@@ -5,6 +5,7 @@
   const dialogContent = document.querySelector('[data-painting-dialog-content]');
   const controls = document.querySelector('[data-paintings-controls]');
   if (!grid || !template || !dialog || !dialogContent || !controls) return;
+  let dialogHistory;
 
   // Metadata transcribed from “Descriptions Website”. Each key mirrors the
   // asset group name, keeping asset additions and editorial copy independent.
@@ -94,7 +95,7 @@
     return hdAliases[media.src] || media.src.replace('assets/img/paintings/', 'assets/img/paintings HD/');
   };
   const openDialog = (item, currentIndex = 0) => {
-    dialogContent.replaceChildren();
+    dialogContent.replaceChildren(); dialog.onkeydown = null;
     const selectedIndex = items.indexOf(item);
     const viewingOrder = [...items.slice(selectedIndex), ...items.slice(0, selectedIndex)];
     viewingOrder.forEach((work, workIndex) => {
@@ -115,6 +116,8 @@
       let zoomSource = work.media[activeIndex].src;
       let zoomSlider;
       let zoomControls;
+      let dragStart;
+      let ignoreNextClick = false;
       const setZoomAmount = (nextAmount) => {
         zoomAmount = nextAmount;
         const isZoomed = zoomAmount > minimumZoom;
@@ -127,6 +130,12 @@
       const showZoomControls = () => {
         if (zoomControlsVisible) return;
         zoomControlsVisible = true;
+        if (window.matchMedia('(max-width: 720px)').matches) {
+          setZoomAmount(175);
+          const image = stage.querySelector('img');
+          if (image) image.src = zoomSource;
+          return;
+        }
         zoomControls = document.createElement('div');
         zoomControls.className = 'painting-dialog__zoom-controls artwork-zoom-controls';
         const label = document.createElement('label');
@@ -173,13 +182,37 @@
           stage.removeAttribute('aria-label');
           delete stage.dataset.zoomCursor;
         }
-        stage.replaceChildren();
-        stage.append(mediaElement(work.media[activeIndex], metadata.title || work.title));
+        const viewArrows = [...stage.querySelectorAll('.painting-dialog__view-arrow')];
+        stage.replaceChildren(mediaElement(work.media[activeIndex], metadata.title || work.title), ...viewArrows);
         if (work.media[activeIndex].type === 'image') setZoomAmount(zoomAmount);
       };
       stage.addEventListener('click', () => {
+        if (ignoreNextClick) { ignoreNextClick = false; return; }
         if (work.media[activeIndex].type === 'image') advanceZoom();
       });
+      stage.addEventListener('pointerdown', (event) => {
+        if (!zoomControlsVisible || event.button !== 0) return;
+        dragStart = { x: event.clientX, y: event.clientY, left: stage.scrollLeft, top: stage.scrollTop, moved: false };
+        stage.classList.add('is-panning');
+        stage.setPointerCapture(event.pointerId);
+      });
+      stage.addEventListener('pointermove', (event) => {
+        if (!dragStart) return;
+        const dx = event.clientX - dragStart.x;
+        const dy = event.clientY - dragStart.y;
+        if (Math.abs(dx) > 3 || Math.abs(dy) > 3) dragStart.moved = true;
+        stage.scrollLeft = dragStart.left - dx;
+        stage.scrollTop = dragStart.top - dy;
+      });
+      const endDrag = (event) => {
+        if (!dragStart) return;
+        if (dragStart.moved) ignoreNextClick = true;
+        dragStart = undefined;
+        stage.classList.remove('is-panning');
+        if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
+      };
+      stage.addEventListener('pointerup', endDrag);
+      stage.addEventListener('pointercancel', endDrag);
       stage.addEventListener('keydown', (event) => {
         if (work.media[activeIndex].type !== 'image' || (event.key !== 'Enter' && event.key !== ' ')) return;
         event.preventDefault();
@@ -200,13 +233,15 @@
       }
       if (work.media.length > 1) {
         const views = document.createElement('div'); views.className = 'painting-dialog__views';
-        work.media.forEach((_, viewIndex) => { const button = document.createElement('button'); button.textContent = viewIndex + 1; button.setAttribute('aria-label', `View ${viewIndex + 1}`); if (viewIndex === activeIndex) button.setAttribute('aria-current', 'true'); button.addEventListener('click', () => { renderMedia(viewIndex); views.querySelectorAll('button').forEach((viewButton, buttonIndex) => { if (buttonIndex === viewIndex) viewButton.setAttribute('aria-current', 'true'); else viewButton.removeAttribute('aria-current'); }); }); views.append(button); });
+        work.media.forEach((_, viewIndex) => { const button = document.createElement('button'); button.className = 'painting-dialog__view-number'; button.textContent = viewIndex + 1; button.setAttribute('aria-label', `View ${viewIndex + 1}`); if (viewIndex === activeIndex) button.setAttribute('aria-current', 'true'); button.addEventListener('click', () => { renderMedia(viewIndex); views.querySelectorAll('.painting-dialog__view-number').forEach((viewButton, buttonIndex) => { if (buttonIndex === viewIndex) viewButton.setAttribute('aria-current', 'true'); else viewButton.removeAttribute('aria-current'); }); }); views.append(button); });
+        const viewButtons = [...views.querySelectorAll('.painting-dialog__view-number')]; const selectView = (index) => viewButtons[(index + viewButtons.length) % viewButtons.length].click(); const previous = document.createElement('button'); previous.className = 'painting-dialog__view-arrow painting-dialog__view-arrow--previous'; previous.type = 'button'; previous.setAttribute('aria-label', 'Previous image'); previous.textContent = '‹'; previous.onclick = (event) => { event.stopPropagation(); selectView(activeIndex - 1); }; const next = document.createElement('button'); next.className = 'painting-dialog__view-arrow painting-dialog__view-arrow--next'; next.type = 'button'; next.setAttribute('aria-label', 'Next image'); next.textContent = '›'; next.onclick = (event) => { event.stopPropagation(); selectView(activeIndex + 1); }; stage.append(previous, next); let swipeStart; stage.addEventListener('touchstart', (event) => { swipeStart = event.changedTouches[0]?.clientX; }, { passive: true }); stage.addEventListener('touchend', (event) => { const delta = event.changedTouches[0]?.clientX - swipeStart; if (!stage.classList.contains('is-zoomed') && Math.abs(delta) > 45) selectView(delta < 0 ? activeIndex + 1 : activeIndex - 1); }, { passive: true }); if (workIndex === 0) dialog.onkeydown = (event) => { if (event.key === 'ArrowLeft') { event.preventDefault(); selectView(activeIndex - 1); } if (event.key === 'ArrowRight') { event.preventDefault(); selectView(activeIndex + 1); } };
         info.append(views);
       }
       section.append(stage, info);
       dialogContent.append(section);
     });
     dialog.showModal();
+    dialogHistory?.opened();
     dialog.scrollTop = 0;
   };
   const renderItems = (visibleItems) => {
@@ -318,6 +353,7 @@
   controls.addEventListener('change', applyFilters);
   applyFilters();
   const closeViewer = () => {
+    if (dialogHistory?.closeRequested()) return;
     const sections = [...dialogContent.querySelectorAll('[data-gallery-item]')];
     const lastViewed = sections.reduce((closest, section) => {
       const rect = section.getBoundingClientRect();
@@ -328,6 +364,7 @@
     const destination = lastViewed && grid.querySelector(`[data-gallery-item="${lastViewed.id}"]`);
     if (destination) window.requestAnimationFrame(() => destination.scrollIntoView({ block: 'center', behavior: 'auto' }));
   };
+  dialogHistory = window.setupArtworkDialogHistory(dialog, closeViewer);
   document.querySelector('.painting-dialog__close').addEventListener('click', closeViewer);
   dialog.addEventListener('cancel', (event) => { event.preventDefault(); closeViewer(); });
   dialog.addEventListener('click', (event) => { if (event.target === dialog) closeViewer(); });

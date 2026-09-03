@@ -5,6 +5,7 @@
   const dialogContent = document.querySelector('[data-digital-dialog-content]');
   const controls = document.querySelector('[data-digital-controls]');
   if (!grid || !template || !dialog || !dialogContent || !controls) return;
+  let dialogHistory;
 
   const mediumByTitle = {
     'Kalyāṇa-mittatā': ['Apple Keynote'], Adam: ['Apple Keynote'], Exit: ['Apple Keynote'],
@@ -49,7 +50,7 @@
     if (image.complete) screen();
   };
   const openViewer = (item, selectedView = 0) => {
-    const start = allItems.indexOf(item); const order = [...allItems.slice(start), ...allItems.slice(0, start)]; dialogContent.replaceChildren();
+    const start = allItems.indexOf(item); const order = [...allItems.slice(start), ...allItems.slice(0, start)]; dialogContent.replaceChildren(); dialog.onkeydown = null;
     order.forEach((work, workIndex) => {
       const section = document.createElement('section'); section.className = 'painting-dialog__work'; section.dataset.digitalItem = work.id;
       const stage = document.createElement('div'); stage.className = 'painting-dialog__stage'; const info = document.createElement('div'); info.className = 'painting-dialog__info'; const heading = document.createElement('h2'); heading.textContent = work.title; info.append(heading);
@@ -57,9 +58,9 @@
       const zoom = window.createArtworkZoom(stage);
       const render = () => { zoom.render(mediaElement(work.media[viewIndex], work.title)); };
       render();
-      if (work.media.length > 1) { const views = document.createElement('div'); views.className = 'painting-dialog__views'; work.media.forEach((_, index) => { const button = document.createElement('button'); button.textContent = index + 1; if (index === viewIndex) button.setAttribute('aria-current', 'true'); button.addEventListener('click', () => { viewIndex = index; render(); views.querySelectorAll('button').forEach((view, position) => position === index ? view.setAttribute('aria-current', 'true') : view.removeAttribute('aria-current')); }); views.append(button); }); info.append(views); }
+      if (work.media.length > 1) { const views = document.createElement('div'); views.className = 'painting-dialog__views'; work.media.forEach((_, index) => { const button = document.createElement('button'); button.textContent = index + 1; if (index === viewIndex) button.setAttribute('aria-current', 'true'); button.addEventListener('click', () => { viewIndex = index; render(); views.querySelectorAll('.painting-dialog__view-number').forEach((view, position) => position === index ? view.setAttribute('aria-current', 'true') : view.removeAttribute('aria-current')); }); button.className = 'painting-dialog__view-number'; views.append(button); }); const viewButtons = [...views.querySelectorAll('.painting-dialog__view-number')]; const selectView = (index) => viewButtons[(index + viewButtons.length) % viewButtons.length].click(); const previous = document.createElement('button'); previous.className = 'painting-dialog__view-arrow painting-dialog__view-arrow--previous'; previous.type = 'button'; previous.setAttribute('aria-label', 'Previous image'); previous.textContent = '‹'; previous.onclick = (event) => { event.stopPropagation(); selectView(viewIndex - 1); }; const next = document.createElement('button'); next.className = 'painting-dialog__view-arrow painting-dialog__view-arrow--next'; next.type = 'button'; next.setAttribute('aria-label', 'Next image'); next.textContent = '›'; next.onclick = (event) => { event.stopPropagation(); selectView(viewIndex + 1); }; stage.append(previous, next); let swipeStart; stage.addEventListener('touchstart', (event) => { swipeStart = event.changedTouches[0]?.clientX; }, { passive: true }); stage.addEventListener('touchend', (event) => { const delta = event.changedTouches[0]?.clientX - swipeStart; if (!stage.classList.contains('is-zoomed') && Math.abs(delta) > 45) selectView(delta < 0 ? viewIndex + 1 : viewIndex - 1); }, { passive: true }); if (workIndex === 0) dialog.onkeydown = (event) => { if (event.key === 'ArrowLeft') { event.preventDefault(); selectView(viewIndex - 1); } if (event.key === 'ArrowRight') { event.preventDefault(); selectView(viewIndex + 1); } }; info.append(views); }
       section.append(stage, info); dialogContent.append(section);
-    }); dialog.showModal(); dialog.scrollTop = 0;
+    }); dialog.showModal(); dialogHistory?.opened(); dialog.scrollTop = 0;
   };
   const selectMedium = (tag) => { controls.querySelectorAll('input[name="medium"]').forEach((input) => { input.checked = input.value === tag; }); applyFilters(); };
   const renderItems = (items) => {
@@ -90,6 +91,7 @@
   controls.querySelectorAll('.paintings-filter').forEach((menu) => menu.addEventListener('toggle', () => { if (menu.open) controls.querySelectorAll('.paintings-filter[open]').forEach((other) => { if (other !== menu) other.open = false; }); }));
   document.addEventListener('pointerdown', (event) => { if (!controls.contains(event.target)) controls.querySelectorAll('.paintings-filter[open]').forEach((menu) => { menu.open = false; }); });
   controls.addEventListener('change', applyFilters); applyFilters();
-  const closeViewer = () => { dialog.close(); };
+  const closeViewer = () => { if (dialogHistory?.closeRequested()) return; dialog.close(); };
+  dialogHistory = window.setupArtworkDialogHistory(dialog, closeViewer);
   document.querySelector('.painting-dialog__close').addEventListener('click', closeViewer); dialog.addEventListener('cancel', (event) => { event.preventDefault(); closeViewer(); });
 })();

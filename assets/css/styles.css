@@ -49,6 +49,13 @@ body [style*="font-family"] {
   outline-offset: 6px;
 }
 
+.site-back {
+  padding: 6px 8px;
+  background: #f8f6f2;
+  box-shadow: none;
+  opacity: 1;
+}
+
 .title-page-document,
 .title-page,
 .title-page * {
@@ -212,7 +219,9 @@ body [style*="font-family"] {
 /* Framed collections keep every piece inside a white border. */
 .portfolio-cube--framed .portfolio-cube__face img,
 .portfolio-cube--framed .portfolio-cube__face video,
-.portfolio-cube--framed .portfolio-cube__face video.is-uncropped {
+.portfolio-cube--framed .portfolio-cube__face video.is-uncropped,
+.portfolio-cube__face img.is-framed,
+.portfolio-cube__face video.is-framed {
   inset: 12px;
   width: calc(100% - 24px);
   height: calc(100% - 24px);
@@ -328,7 +337,7 @@ body [style*="font-family"] {
   .title-page > .container {
     width: 100%;
     max-width: none;
-    padding: 0 6vw 38px;
+    padding: 0 20px 38px;
   }
 
   .title-page > .container > .row > .col {
@@ -1769,8 +1778,10 @@ a.swiper-slide:hover {
     position: static !important;
     top: auto !important;
     right: auto !important;
-    width: min(307px, calc(100vw - 48px));
-    max-width: calc(100vw - 48px);
+    /* Keep the navigation and cube's flow layout within the same 20px
+       mobile gutter. */
+    width: min(307px, calc(100vw - 40px));
+    max-width: calc(100vw - 40px);
     margin: 0 auto;
     transform: none !important;
     align-items: flex-end;

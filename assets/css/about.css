@@ -46,6 +46,12 @@ body.about-particles-page .about-particle-copy h1 {
   text-transform: lowercase;
 }
 
+@media (max-width: 520px) {
+  body.about-particles-page .about-title-last {
+    display: block;
+  }
+}
+
 body.about-particles-page .about-particle-copy__columns {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

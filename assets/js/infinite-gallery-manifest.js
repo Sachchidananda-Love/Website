@@ -66,19 +66,19 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Avijjā",
       "media": [
         {
-          "src": "assets/img/paintings/Avijjā-1.png",
+          "src": "assets/img/paintings/Avijjā-1.png",
           "type": "image",
           "width": 809,
           "height": 1008
         },
         {
-          "src": "assets/img/paintings/Avijjā-2.png",
+          "src": "assets/img/paintings/Avijjā-2.png",
           "type": "image",
           "width": 1095,
           "height": 961
         },
         {
-          "src": "assets/img/paintings/Avijjā-3.png",
+          "src": "assets/img/paintings/Avijjā-3.png",
           "type": "image",
           "width": 756,
           "height": 965
@@ -92,7 +92,7 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "blå",
       "media": [
         {
-          "src": "assets/img/paintings/blå.png",
+          "src": "assets/img/paintings/blå.png",
           "type": "image",
           "width": 823,
           "height": 778
@@ -232,7 +232,7 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Idaṃ",
       "media": [
         {
-          "src": "assets/img/paintings/Idaṃ.png",
+          "src": "assets/img/paintings/Idaṃ.png",
           "type": "image",
           "width": 823,
           "height": 778
@@ -292,13 +292,13 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Kalyāṇa-mittatā",
       "media": [
         {
-          "src": "assets/img/paintings/Kalyāṇa-mittatā-1.png",
+          "src": "assets/img/paintings/Kalyāṇa-mittatā-1.png",
           "type": "image",
           "width": 823,
           "height": 778
         },
         {
-          "src": "assets/img/paintings/Kalyāṇa-mittatā-2.png",
+          "src": "assets/img/paintings/Kalyāṇa-mittatā-2.png",
           "type": "image",
           "width": 823,
           "height": 778
@@ -378,7 +378,7 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "nāga",
       "media": [
         {
-          "src": "assets/img/paintings/nāga.png",
+          "src": "assets/img/paintings/nāga.png",
           "type": "image",
           "width": 823,
           "height": 778
@@ -506,7 +506,7 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Rūpa",
       "media": [
         {
-          "src": "assets/img/paintings/Rūpa.png",
+          "src": "assets/img/paintings/Rūpa.png",
           "type": "image",
           "width": 823,
           "height": 778
@@ -520,37 +520,37 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Sabhāva",
       "media": [
         {
-          "src": "assets/img/paintings/Sabhāva-1.png",
+          "src": "assets/img/paintings/Sabhāva-1.png",
           "type": "image",
           "width": 823,
           "height": 778
         },
         {
-          "src": "assets/img/paintings/Sabhāva-2.mp4",
+          "src": "assets/img/paintings/Sabhāva-2.mp4",
           "type": "video",
           "width": 16,
           "height": 9
         },
         {
-          "src": "assets/img/paintings/Sabhāva-3.png",
+          "src": "assets/img/paintings/Sabhāva-3.png",
           "type": "image",
           "width": 823,
           "height": 778
         },
         {
-          "src": "assets/img/paintings/Sabhāva-4.png",
+          "src": "assets/img/paintings/Sabhāva-4.png",
           "type": "image",
           "width": 823,
           "height": 778
         },
         {
-          "src": "assets/img/paintings/Sabhāva-5.png",
+          "src": "assets/img/paintings/Sabhāva-5.png",
           "type": "image",
           "width": 823,
           "height": 778
         },
         {
-          "src": "assets/img/paintings/Sabhāva-6.png",
+          "src": "assets/img/paintings/Sabhāva-6.png",
           "type": "image",
           "width": 823,
           "height": 778
@@ -564,7 +564,7 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Sāṃkhya",
       "media": [
         {
-          "src": "assets/img/paintings/Sāṃkhya.png",
+          "src": "assets/img/paintings/Sāṃkhya.png",
           "type": "image",
           "width": 823,
           "height": 778
@@ -592,13 +592,13 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Tathā",
       "media": [
         {
-          "src": "assets/img/paintings/Tathā-1.png",
+          "src": "assets/img/paintings/Tathā-1.png",
           "type": "image",
           "width": 1434,
           "height": 1167
         },
         {
-          "src": "assets/img/paintings/Tathā-2.png",
+          "src": "assets/img/paintings/Tathā-2.png",
           "type": "image",
           "width": 874,
           "height": 774
@@ -868,7 +868,7 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Kalyāṇa-mittatā",
       "media": [
         {
-          "src": "assets/img/Digital Art HD/Kalyāṇa-mittatā.png",
+          "src": "assets/img/Digital Art HD/Kalyāṇa-mittatā.png",
           "type": "image",
           "width": 1988,
           "height": 1320

@@ -81,10 +81,12 @@
         : source.replace('assets/img/', 'assets/img/cube/')
     ));
   });
+  const framedArtworkSources = new Set([
+    ...artworkPools.paintings,
+    ...artworkPools.digital,
+    ...artworkPools.graphicDesign
+  ]);
   const defaultGraphicDesignExclusions = new Set([
-    'assets/img/cube/Graphic Design/Palmier/Menu 1.png',
-    'assets/img/cube/Graphic Design/Palmier/Menu 2.png',
-    'assets/img/cube/Graphic Design/Palmier/Pastry Tag.png',
     'assets/img/cube/Graphic Design/Palmier/tea.png'
   ]);
   const defaultGraphicDesign = artworkPools.graphicDesign.filter((source) => {
@@ -111,7 +113,7 @@
 
   const updateCubeSize = () => {
     const size = window.innerWidth <= 700
-      ? Math.round(Math.min(window.innerWidth * 0.64, window.innerHeight * 0.32, 260))
+      ? Math.round(Math.min(window.innerWidth * 0.64, window.innerHeight * 0.32, 260, Math.max(0, window.innerWidth - 40)))
       : window.innerWidth <= 900 ? 150 : settings.cubeSize;
     cubeContainer.style.setProperty('--cube-size', `${size}px`);
     cubeContainer.style.setProperty('--cube-depth', `${size / 2}px`);
@@ -221,6 +223,7 @@
 
     nextMedia.src = assetURL(source);
     nextMedia.classList.toggle('is-uncropped', isUncroppedVideo);
+    nextMedia.classList.toggle('is-framed', framedArtworkSources.has(source));
     face.isPlaybackLocked = false;
     if (isVideo) {
       const isAboutVideo = activePool === 'about';

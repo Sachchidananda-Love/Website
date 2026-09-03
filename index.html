@@ -203,6 +203,13 @@
                 setNavigationHover(item, false);
                 document.dispatchEvent(new CustomEvent('portfolio-cube-categorychange', { detail: { category: null } }));
             });
+            item.link.addEventListener('click', (event) => {
+                if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return;
+                event.preventDefault();
+                setNavigationHover(item, true);
+                document.dispatchEvent(new CustomEvent('portfolio-cube-categorychange', { detail: { category: item.link.dataset.cubeCategory } }));
+                window.setTimeout(() => window.location.assign(item.link.href), 160);
+            });
         });
     </script>
 </body>

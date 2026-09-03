@@ -29,8 +29,9 @@
     placeCursorInTopLayer();
     cursor.style.left = `${event.clientX}px`;
     cursor.style.top = `${event.clientY}px`;
-    const overZoomControl = event.target.closest('.artwork-zoom-controls, .painting-dialog__zoom-controls');
-    const zoomStage = overZoomControl ? null : event.target.closest('.painting-dialog__stage.has-zoom, .gallery-dialog__stage.has-zoom');
+    const control = event.target.closest('a, button, input, select, summary, [role="button"], [role="link"], [role="slider"], [data-lang-switcher], .tile, .large-button, .section-dropdown, .language-switcher, .artwork-zoom-controls, .painting-dialog__zoom-controls');
+    const overControl = control && !control.matches('.painting-dialog__stage, .gallery-dialog__stage');
+    const zoomStage = overControl ? null : event.target.closest('.painting-dialog__stage.has-zoom, .gallery-dialog__stage.has-zoom');
     cursor.src = zoomStage
       ? (zoomStage.dataset.zoomCursor === 'out' ? zoomOutCursor : zoomInCursor)
       : event.target.closest('a, button, input, select, summary, [role="button"], [role="link"], [role="slider"], [data-lang-switcher], .tile, .large-button, .section-dropdown, .language-switcher, .artwork-zoom-controls, .painting-dialog__zoom-controls, .painting-card__media, .painting-dialog__stage, .gallery-artwork, .gallery-artwork__surface') ? hoverCursor : normalCursor;
