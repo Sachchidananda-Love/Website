@@ -10,6 +10,7 @@
     let controls = null;
     let dragStart = null;
     let ignoreNextClick = false;
+    const isZoomable = () => currentMedia?.tagName === 'IMG' || currentMedia?.dataset.zoomable === 'true';
 
     const setAmount = (amount) => {
       const zoomed = amount > minimum;
@@ -20,11 +21,11 @@
     };
 
     const showControls = () => {
-      if (controlsVisible || currentMedia?.tagName !== 'IMG') return;
+      if (controlsVisible || !isZoomable()) return;
       controlsVisible = true;
       stage.dataset.zoomCursor = 'out';
       if (window.matchMedia('(max-width: 720px)').matches) {
-        if (zoomSource) currentMedia.src = zoomSource;
+        if (zoomSource && currentMedia.tagName === 'IMG') currentMedia.src = zoomSource;
         setAmount(175);
         return;
       }
@@ -39,7 +40,7 @@
       controls.addEventListener('click', (event) => event.stopPropagation());
       controls.addEventListener('keydown', (event) => event.stopPropagation());
       label.append(slider); controls.append(label); stage.append(controls);
-      if (zoomSource) currentMedia.src = zoomSource;
+      if (zoomSource && currentMedia.tagName === 'IMG') currentMedia.src = zoomSource;
       setAmount(initial);
     };
 
@@ -94,7 +95,7 @@
         stage.style.removeProperty('--zoom-scale');
         const viewArrows = [...stage.querySelectorAll('.painting-dialog__view-arrow')];
         stage.replaceChildren(media, ...viewArrows);
-        if (media.tagName === 'IMG') {
+        if (isZoomable()) {
           stage.classList.add('has-zoom'); stage.dataset.zoomCursor = 'in'; stage.tabIndex = 0; stage.setAttribute('role', 'button');
           stage.setAttribute('aria-label', 'Click to show zoom controls.');
         } else {

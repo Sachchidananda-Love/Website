@@ -67,6 +67,11 @@ body [style*="font-family"] {
   cursor: none !important;
 }
 
+.title-page-document {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 .title-page::after {
   content: "";
   position: fixed;

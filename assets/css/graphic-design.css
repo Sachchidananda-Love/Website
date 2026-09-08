@@ -5,15 +5,32 @@
 .graphic-section { max-width: 1320px; padding: 66px 32px 0; margin: 0 auto; }
 .graphic-section > h2 { margin: 0 0 22px; font: 32px/1 Helvetica, Arial, sans-serif; font-weight: 400; }
 .graphic-section .paintings-grid { max-width: none; }
-.graphic-section--palmier { max-width: none; padding: 66px max(32px, calc((100vw - 1320px) / 2)) 72px; background: #eed2c4; }
+.graphic-section--palmier { max-width: none; padding: 66px max(32px, calc((100vw - 1320px) / 2)) 72px; color: #42633d; background: #eed2c4; }
+.graphic-header .paintings-back.is-over-palmier { background: #eed2c4; }
 .graphic-section--palmier .painting-card, .graphic-section--palmier .painting-card__media { background: #eed2c4; }
-.palmier-project { display: grid; grid-template-columns: minmax(160px, 1fr) minmax(280px, 360px) minmax(160px, 1fr); gap: 26px; align-items: stretch; max-width: 1120px; margin: 0 auto 42px; }
-.palmier-project__side { display: flex; flex-direction: column; justify-content: space-between; height: 1100px; }
-.palmier-project iframe { display: block; width: 100%; height: 1100px; border: 0; background: #fff; }
-.palmier-project .painting-card__body { display: none; }
-.palmier-menus { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100vw; margin-left: calc(50% - 50vw); }
-.palmier-menus button { display: block; padding: 0; border: 0; background: transparent; cursor: pointer; }
-.palmier-menus img { display: block; width: 100%; height: auto; }
+.graphic-section--palmier .painting-card__title, .graphic-section--palmier .painting-card__description { color: #42633d; }
+.graphic-section--palmier .painting-card__tags li { border-color: #d78b71; }
+.graphic-section--palmier .painting-card__tags button { color: #d78b71; }
+.graphic-section--palmier .painting-card__tags button:hover, .graphic-section--palmier .painting-card__tags button:focus-visible { color: #42633d; background: #d78b71; }
+.palmier-site-placeholder { display: grid; width: 100%; height: 100%; place-items: center; border: 1px dashed rgb(22 22 22 / .36); color: var(--ink); font: 13px/1.35 Arial, sans-serif; letter-spacing: .04em; text-align: center; text-transform: uppercase; }
+.palmier-site-placeholder span { display: block; max-width: 13ch; }
+.palmier-site-preview { position: absolute; inset: 14px; width: auto; height: auto; overflow: hidden; }
+.palmier-site-preview video { object-fit: cover; object-position: center; animation: palmier-video-pan 5.6s linear infinite; transform: scale(1.06) translateY(2.8%); }
+.painting-card:has(.palmier-site-preview) .painting-card__media, .painting-card:has(.palmier-site-preview) .palmier-site-preview { min-height: 0; overflow: hidden; }
+.painting-card:has(.palmier-site-preview) .painting-card__media { height: auto; aspect-ratio: 1 / 1; }
+@keyframes palmier-video-pan { to { transform: scale(1.06) translateY(-2.8%); } }
+.palmier-site-frame { display: block; width: 100%; height: 100dvh; border: 0; background: #fff; }
+.painting-dialog--palmier-site .painting-dialog__close { display: none; }
+.painting-dialog--palmier-site .site-cursor { display: none; }
+.painting-dialog--palmier-site, .painting-dialog--palmier-site * { cursor: auto !important; }
+.palmier-menu-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; height: 100%; }
+.palmier-menu-pair button { min-width: 0; padding: 0; border: 0; background: transparent; cursor: pointer; }
+.palmier-menu-pair img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.palmier-menu-dialog { display: grid; align-items: center; min-height: 100dvh; max-width: 1320px; padding: 76px 32px 48px; margin: 0 auto; }
+.palmier-menu-composite { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; width: 100%; max-height: calc(100dvh - 124px); }
+.palmier-menu-composite img { display: block; width: 100%; max-height: calc(100dvh - 124px); object-fit: contain; }
+.painting-dialog__stage.is-zoomed .palmier-menu-composite { width: var(--zoom-scale, 100%); max-width: none; max-height: none; min-width: max(1100px, var(--zoom-scale, 100%)); }
+.painting-dialog__stage.is-zoomed .palmier-menu-composite img { max-height: none; }
 .painting-dialog__visit { display: inline-block; padding: 10px 15px; margin-top: 14px; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink); background: transparent; font: 12px/1 Helvetica, Arial, sans-serif; text-decoration: none; }
 .painting-dialog__visit:hover, .painting-dialog__visit:focus-visible { color: var(--paper); background: var(--ink); outline: none; }
-@media (max-width: 720px) { .graphic-section { padding: 46px 20px 0; } .graphic-section--palmier { padding: 46px 20px 54px; } .graphic-section > h2 { font-size: 27px; } .palmier-project { grid-template-columns: 1fr; max-width: 360px; } .palmier-project__side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; height: auto; } .palmier-project__frame { grid-row: 1; } .palmier-project iframe { height: 1000px; } .palmier-menus { width: calc(100% + 40px); margin-left: -20px; } }
+@media (max-width: 720px) { .graphic-section { padding: 46px 20px 0; } .graphic-section--palmier { padding: 46px 20px 54px; } .graphic-section > h2 { font-size: 27px; } .palmier-menu-dialog { padding: 75px 20px 36px; } .painting-dialog__stage.is-zoomed .palmier-menu-composite { min-width: 800px; } }

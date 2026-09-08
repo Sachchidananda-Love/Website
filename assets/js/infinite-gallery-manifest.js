@@ -1164,6 +1164,20 @@ window.INFINITE_GALLERY_MEDIA = {
       ]
     },
     {
+      "id": "graphic-design-10a",
+      "category": "graphic-design",
+      "collection": "Graphic Design",
+      "title": "Business Cards",
+      "media": [
+        {
+          "src": "assets/img/Graphic Design/Palmier/business cards final.png",
+          "type": "image",
+          "width": 16858,
+          "height": 9633
+        }
+      ]
+    },
+    {
       "id": "graphic-design-11",
       "category": "graphic-design",
       "collection": "Graphic Design",

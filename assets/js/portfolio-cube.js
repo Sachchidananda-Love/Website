@@ -113,7 +113,7 @@
 
   const updateCubeSize = () => {
     const size = window.innerWidth <= 700
-      ? Math.round(Math.min(window.innerWidth * 0.64, window.innerHeight * 0.32, 260, Math.max(0, window.innerWidth - 40)))
+      ? Math.round(Math.min(window.innerWidth * 0.64, 260, Math.max(0, window.innerWidth - 40)))
       : window.innerWidth <= 900 ? 150 : settings.cubeSize;
     cubeContainer.style.setProperty('--cube-size', `${size}px`);
     cubeContainer.style.setProperty('--cube-depth', `${size / 2}px`);
