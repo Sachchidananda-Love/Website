@@ -23,7 +23,7 @@
             <img id="logo" style="display:none" class="videos" width="100%" height="100%" src="assets/img/Videos/Logo.gif"></img>
         </a>    
     </header>
-    <a class="portfolio-cube" href="gallery.html" aria-label="Open the infinite gallery">
+    <a class="portfolio-cube" href="gallery.html" aria-label="Portfolio cube">
         <div class="portfolio-cube__glow"></div>
         <div class="portfolio-cube__float">
             <div class="portfolio-cube__scene">
@@ -42,7 +42,7 @@
     <div class="container">
         <div class="row row-cols-1 row-cols-lg-3">
             <div class="col">
-                <ul class="navigation_list2">
+                <ul id="portfolio-navigation" class="navigation_list2">
                     <li class="title-navigation-item"><a href="about.html" class="title-navigation-link" data-cube-category="about"><img src="assets/img/nav/About.png" data-hover-src="assets/img/nav/About-1.png" alt="About"></a></li>
                     <li class="title-navigation-item"><a href="Paintings.html" class="title-navigation-link" data-cube-category="paintings"><img src="assets/img/nav/Paintings.png" data-hover-src="assets/img/nav/Paintings-1.png" alt="Paintings"></a></li>
                     <li class="title-navigation-item"><a href="Graphic%20Design.html" class="title-navigation-link" data-cube-category="graphicDesign"><img src="assets/img/nav/GraphicDesign.png" data-hover-src="assets/img/nav/GraphicDesign-1.png" alt="Graphic Design"></a></li>
@@ -141,27 +141,31 @@
         const cursorRadius = 16;
         const hoverOffset = 9 * (96 / 72);
         const cubeElement = document.querySelector('.portfolio-cube');
+        const portfolioNavigation = document.getElementById('portfolio-navigation');
+        const mobileLayout = window.matchMedia('(max-width: 700px)');
         let activeCubeCategory = null;
 
         cubeElement.addEventListener('click', (event) => {
             if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-            const visibleCubeMedia = cubeElement.querySelector('.portfolio-cube__face--front .is-visible');
-            const visibleCubeSource = visibleCubeMedia?.getAttribute('src');
-            if (visibleCubeSource) {
-                try {
-                    window.sessionStorage.setItem(
-                        'infinite-gallery-entry-media',
-                        visibleCubeSource.replace('assets/img/cube/', 'assets/img/')
-                    );
-                } catch {}
-            }
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
             event.preventDefault();
-            document.body.classList.add('is-opening-gallery');
-            window.setTimeout(() => window.location.assign(cubeElement.href), 2000);
+            if (mobileLayout.matches) {
+                portfolioNavigation?.scrollIntoView({
+                    behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+                    block: 'center'
+                });
+                try { window.sessionStorage.setItem('title-page-return-position', 'menu'); } catch {}
+            }
         });
 
-        window.addEventListener('pageshow', () => document.body.classList.remove('is-opening-gallery'));
+        window.addEventListener('pageshow', () => {
+            document.body.classList.remove('is-opening-gallery');
+            if (!mobileLayout.matches) return;
+            try {
+                if (window.sessionStorage.getItem('title-page-return-position') !== 'menu') return;
+                window.sessionStorage.removeItem('title-page-return-position');
+                window.requestAnimationFrame(() => portfolioNavigation?.scrollIntoView({ block: 'center' }));
+            } catch {}
+        });
 
         document.addEventListener('pointermove', (event) => {
             if (!hasFinePointer) return;

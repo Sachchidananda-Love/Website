@@ -1108,16 +1108,22 @@ window.INFINITE_GALLERY_MEDIA = {
       "title": "Menu",
       "media": [
         {
-          "src": "assets/img/Graphic Design/Palmier/Menu 1.png",
+          "src": "assets/img/Graphic Design Thumbnails/Palmier/menu1.png",
           "type": "image",
-          "width": 3000,
+          "width": 5996,
           "height": 4287
         },
         {
-          "src": "assets/img/Graphic Design/Palmier/Menu 2.png",
+          "src": "assets/img/Graphic Design Thumbnails/Palmier/menu2.png",
           "type": "image",
-          "width": 3000,
-          "height": 4287
+          "width": 5999,
+          "height": 3901
+        },
+        {
+          "src": "assets/img/Graphic Design Thumbnails/Palmier/menu3.png",
+          "type": "image",
+          "width": 6020,
+          "height": 3551
         }
       ]
     },

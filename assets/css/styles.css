@@ -322,7 +322,7 @@ body [style*="font-family"] {
     /* The extra height is deliberate: it reserves a landing area for the
        shadow before the navigation begins. */
     height: calc(var(--cube-size) + var(--cube-shadow-reserve));
-    margin: max(216px, calc(env(safe-area-inset-top) + 96px)) auto 10pt;
+    margin: calc(50svh - (var(--cube-size) / 2)) auto calc(100svh + 10pt);
     transform: none;
   }
 
