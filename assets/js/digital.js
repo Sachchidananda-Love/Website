@@ -36,6 +36,7 @@
   };
   const screenWhiteBackground = (image) => {
     if (image.tagName !== 'IMG') return;
+    image.classList.add('white-is-transparent');
     const screen = () => {
       try {
         const canvas = document.createElement('canvas'); canvas.width = canvas.height = 36;
@@ -66,10 +67,10 @@
   const renderItems = (items) => {
     grid.replaceChildren();
     items.forEach((item) => {
-      const fragment = template.content.cloneNode(true); const card = fragment.querySelector('.painting-card'); const media = fragment.querySelector('.painting-card__media'); const preview = fragment.querySelector('.painting-card__preview'); let viewIndex = 0;
-      const render = () => { preview.replaceChildren(); const element = mediaElement(item.media[viewIndex], item.title); if (element.tagName === 'VIDEO') { element.controls = false; element.autoplay = true; element.loop = true; } preview.append(element); screenWhiteBackground(element); };
+      const fragment = template.content.cloneNode(true); const card = fragment.querySelector('.painting-card'); card.classList.toggle('digital-card--title-clearance', ['No tree, it is said', 'tattoo', 'Homage to MF DOOM'].includes(item.title)); const media = fragment.querySelector('.painting-card__media'); const preview = fragment.querySelector('.painting-card__preview'); const navigation = fragment.querySelector('.painting-card__navigation'); let viewIndex = 0;
+      const render = () => { preview.replaceChildren(); const element = mediaElement(item.media[viewIndex], item.title); if (element.tagName === 'VIDEO') { element.controls = false; element.autoplay = true; element.loop = true; } preview.append(element); screenWhiteBackground(element); navigation.querySelectorAll('.painting-card__dot').forEach((dot, index) => index === viewIndex ? dot.setAttribute('aria-current', 'true') : dot.removeAttribute('aria-current')); };
       render(); media.addEventListener('click', (event) => { if (!event.target.closest('button')) openViewer(item, viewIndex); });
-      if (item.media.length > 1) ['previous', 'next'].forEach((direction) => { const button = document.createElement('button'); button.className = `painting-card__${direction}`; button.type = 'button'; const icon = document.createElement('img'); icon.src = `assets/img/${direction === 'previous' ? 'leftarrow' : 'rightarrow'}.png`; icon.alt = ''; button.append(icon); button.addEventListener('click', () => { viewIndex = (viewIndex + (direction === 'next' ? 1 : -1) + item.media.length) % item.media.length; render(); }); media.append(button); });
+      if (item.media.length > 1) { const addArrow = (direction, label) => { const button = document.createElement('button'); button.className = `painting-card__${direction}`; button.type = 'button'; button.setAttribute('aria-label', `${label} view of ${item.title}`); const icon = document.createElement('img'); icon.src = `assets/img/${direction === 'previous' ? 'leftarrow' : 'rightarrow'}.png`; icon.alt = ''; button.append(icon); button.addEventListener('click', () => { viewIndex = (viewIndex + (direction === 'next' ? 1 : -1) + item.media.length) % item.media.length; render(); }); navigation.append(button); }; addArrow('previous', 'Previous'); const dots = document.createElement('div'); dots.className = 'painting-card__dots'; item.media.forEach((_, index) => { const dot = document.createElement('button'); dot.className = 'painting-card__dot'; dot.type = 'button'; dot.setAttribute('aria-label', `View ${index + 1} of ${item.media.length} for ${item.title}`); if (index === viewIndex) dot.setAttribute('aria-current', 'true'); dot.addEventListener('click', () => { viewIndex = index; render(); }); dots.append(dot); }); navigation.append(dots); addArrow('next', 'Next'); }
       fragment.querySelector('.painting-card__title').textContent = item.title;
       tagsFor(item).forEach((tag) => { const li = document.createElement('li'); const button = document.createElement('button'); button.type = 'button'; button.textContent = tag; button.addEventListener('click', () => selectMedium(tag)); li.append(button); fragment.querySelector('.painting-card__tags').append(li); });
       card.dataset.digitalItem = item.id; grid.append(fragment);

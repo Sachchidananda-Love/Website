@@ -1,1 +1,3 @@
 @import url("paintings.css");
+.digital-card--title-clearance .painting-card__media { padding-bottom: 32px; }
+.painting-dialog__stage.is-zoomed { background: var(--paper); }

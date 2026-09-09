@@ -154,7 +154,7 @@ window.INFINITE_GALLERY_MEDIA = {
           "height": 778
         },
         {
-          "src": "assets/img/paintings/fragmentation-2.mov",
+          "src": "assets/img/paintings/fragmentation-2-web.mov",
           "type": "video",
           "width": 16,
           "height": 9
