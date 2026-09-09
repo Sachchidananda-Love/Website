@@ -66,9 +66,9 @@
   const renderItems = (items) => {
     grid.replaceChildren();
     items.forEach((item) => {
-      const fragment = template.content.cloneNode(true); const card = fragment.querySelector('.painting-card'); const media = fragment.querySelector('.painting-card__media'); const preview = fragment.querySelector('.painting-card__preview'); const fullscreen = fragment.querySelector('.painting-card__fullscreen'); let viewIndex = 0;
+      const fragment = template.content.cloneNode(true); const card = fragment.querySelector('.painting-card'); const media = fragment.querySelector('.painting-card__media'); const preview = fragment.querySelector('.painting-card__preview'); let viewIndex = 0;
       const render = () => { preview.replaceChildren(); const element = mediaElement(item.media[viewIndex], item.title); if (element.tagName === 'VIDEO') { element.controls = false; element.autoplay = true; element.loop = true; } preview.append(element); screenWhiteBackground(element); };
-      render(); fullscreen.addEventListener('click', () => openViewer(item, viewIndex)); media.addEventListener('click', (event) => { if (!event.target.closest('button')) openViewer(item, viewIndex); });
+      render(); media.addEventListener('click', (event) => { if (!event.target.closest('button')) openViewer(item, viewIndex); });
       if (item.media.length > 1) ['previous', 'next'].forEach((direction) => { const button = document.createElement('button'); button.className = `painting-card__${direction}`; button.type = 'button'; const icon = document.createElement('img'); icon.src = `assets/img/${direction === 'previous' ? 'leftarrow' : 'rightarrow'}.png`; icon.alt = ''; button.append(icon); button.addEventListener('click', () => { viewIndex = (viewIndex + (direction === 'next' ? 1 : -1) + item.media.length) % item.media.length; render(); }); media.append(button); });
       fragment.querySelector('.painting-card__title').textContent = item.title;
       tagsFor(item).forEach((tag) => { const li = document.createElement('li'); const button = document.createElement('button'); button.type = 'button'; button.textContent = tag; button.addEventListener('click', () => selectMedium(tag)); li.append(button); fragment.querySelector('.painting-card__tags').append(li); });

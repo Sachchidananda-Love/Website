@@ -5,10 +5,11 @@
 .graphic-section { max-width: 1320px; padding: 66px 32px 0; margin: 0 auto; }
 .graphic-section > h2 { margin: 0 0 22px; font: 32px/1 Helvetica, Arial, sans-serif; font-weight: 400; }
 .graphic-section .paintings-grid { max-width: none; }
-.graphic-section--palmier { max-width: none; padding: 66px max(32px, calc((100vw - 1320px) / 2)) 72px; color: #42633d; background: #eed2c4; }
+.graphic-section--palmier { max-width: none; padding: 66px max(32px, calc((100vw - 1320px) / 2)) 72px; color: #42633d; background: #eed2c4; font-family: Helvetica, Arial, sans-serif; }
 .graphic-header .paintings-back.is-over-palmier { background: #eed2c4; }
 .graphic-section--palmier .painting-card, .graphic-section--palmier .painting-card__media { background: #eed2c4; }
-.graphic-section--palmier .painting-card__title, .graphic-section--palmier .painting-card__description { color: #42633d; }
+.graphic-section--palmier .painting-card__title, .graphic-section--palmier .painting-card__description { color: #42633d; font-family: Helvetica, Arial, sans-serif; }
+.graphic-section--palmier .painting-card__tags button { color: #d78b71; font-family: Helvetica, Arial, sans-serif; }
 .graphic-section--palmier .painting-card__tags li { border-color: #d78b71; }
 .graphic-section--palmier .painting-card__tags button { color: #d78b71; }
 .graphic-section--palmier .painting-card__tags button:hover, .graphic-section--palmier .painting-card__tags button:focus-visible { color: #42633d; background: #d78b71; }
@@ -18,6 +19,7 @@
 .palmier-site-preview video { object-fit: cover; object-position: center; animation: palmier-video-pan 5.6s linear infinite; transform: scale(1.06) translateY(2.8%); }
 .painting-card:has(.palmier-site-preview) .painting-card__media, .painting-card:has(.palmier-site-preview) .palmier-site-preview { min-height: 0; overflow: hidden; }
 .painting-card:has(.palmier-site-preview) .painting-card__media { height: auto; aspect-ratio: 1 / 1; }
+.painting-card--wifi-card .painting-card__media { padding-bottom: 32px; }
 @keyframes palmier-video-pan { to { transform: scale(1.06) translateY(-2.8%); } }
 .palmier-site-frame { display: block; width: 100%; height: 100dvh; border: 0; background: #fff; }
 .painting-dialog--palmier-site .painting-dialog__close { display: none; }
@@ -33,4 +35,4 @@
 .painting-dialog__stage.is-zoomed .palmier-menu-composite img { max-height: none; }
 .painting-dialog__visit { display: inline-block; padding: 10px 15px; margin-top: 14px; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink); background: transparent; font: 12px/1 Helvetica, Arial, sans-serif; text-decoration: none; }
 .painting-dialog__visit:hover, .painting-dialog__visit:focus-visible { color: var(--paper); background: var(--ink); outline: none; }
-@media (max-width: 720px) { .graphic-section { padding: 46px 20px 0; } .graphic-section--palmier { padding: 46px 20px 54px; } .graphic-section > h2 { font-size: 27px; } .palmier-menu-dialog { padding: 75px 20px 36px; } .painting-dialog__stage.is-zoomed .palmier-menu-composite { min-width: 800px; } }
+@media (max-width: 720px) { .graphic-section { padding: 46px 20px 0; } .graphic-section--palmier { padding: 46px 20px 54px; } .graphic-section > h2 { font-size: 27px; } .painting-card:has(.palmier-site-preview) .painting-card__media { aspect-ratio: 4 / 5; } .palmier-menu-dialog { padding: 75px 20px 36px; } .painting-dialog__stage.is-zoomed .palmier-menu-composite { min-width: 800px; } }

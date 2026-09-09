@@ -38,6 +38,7 @@ h1 { margin: 0; font-size: clamp(48px, 9vw, 112px); font-weight: 400; letter-spa
 .painting-card:hover, .painting-card:focus-within { translate: 0 20px; }
 .painting-card__preview img.white-is-transparent { mix-blend-mode: multiply; }
 .painting-card__media { position: relative; aspect-ratio: 1 / 1; width: 100%; padding: 14px; background: var(--paper); }
+.painting-card--lysergic-scrawl .painting-card__media { padding-bottom: 32px; }
 .painting-card__preview { display: grid; width: 100%; height: 100%; place-items: center; }
 .painting-card__preview img, .painting-card__preview video { display: block; width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .painting-card__navigation { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 28px; padding: 0 14px; }

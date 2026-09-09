@@ -17,6 +17,7 @@
   const open = (work) => {
     content.replaceChildren();
     dialog.onpointerdown = null;
+    dialog.onscroll = null;
     if (work.title !== 'Stuck') {
       const article = document.createElement('article'); article.className = 'writing-dialog__work';
       const visual = document.createElement('div'); visual.className = 'writing-dialog__visual painting-dialog__stage';
@@ -44,6 +45,7 @@
       selections.forEach((selection) => { paragraph.append(document.createTextNode(poem.slice(at, selection.start))); selection.text.split(/(\n)/).forEach((line) => { if (line === '\n') paragraph.append(document.createTextNode(line)); else if (line) paragraph.append(annotationButton(selection, line)); }); at = selection.end; }); paragraph.append(document.createTextNode(poem.slice(at)));
       article.append(body, aside); content.append(article);
       dialog.onpointerdown = (event) => { if (!aside.classList.contains('is-empty') && !aside.contains(event.target) && !event.target.closest('.writing-annotation')) closeAnnotation(); };
+      dialog.onscroll = () => { if (window.matchMedia('(max-width: 800px)').matches && dialog.scrollTop > 100) closeAnnotation(); };
     }
     dialog.showModal(); dialog.scrollTop = 0;
   };

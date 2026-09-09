@@ -43,7 +43,7 @@
     'tupac': { title: 'Tupac', details: '12 × 16 in · Spray paint', description: 'Tupac Shakur.', tags: ['Spray Paint', 'People'] },
     'Painting.720': { title: 'Painting process', details: 'Process video', tags: [] }
   };
-  const items = window.INFINITE_GALLERY_MEDIA?.items?.filter((item) => item.category === 'paintings') || [];
+  const items = window.INFINITE_GALLERY_MEDIA?.items?.filter((item) => item.category === 'paintings' && item.title !== 'Painting.720') || [];
   const defaultOrder = new Map([
     'fragmentation', 'Pralaya', 'Kalyāṇa-mittatā', 'knust', 'Neither', 'Tathata',
     'nāga', 'Laya', 'Sāṃkhya', 'Tathā', 'Stillhet', 'Idaṃ'
@@ -252,6 +252,7 @@
     const metadata = metadataFor(item);
     const fragment = template.content.cloneNode(true);
     const card = fragment.querySelector('.painting-card');
+    if (item.title === 'Lysergic Scrawl') card.classList.add('painting-card--lysergic-scrawl');
     const media = fragment.querySelector('.painting-card__media');
     const previewContainer = fragment.querySelector('.painting-card__preview');
     const navigation = fragment.querySelector('.painting-card__navigation');
