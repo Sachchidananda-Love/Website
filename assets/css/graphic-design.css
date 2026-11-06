@@ -5,9 +5,9 @@
 .graphic-section { max-width: 1320px; padding: 66px 32px 0; margin: 0 auto; }
 .graphic-section > h2 { margin: 0 0 22px; font: 32px/1 Helvetica, Arial, sans-serif; font-weight: 400; }
 .graphic-section .paintings-grid { max-width: none; }
-.graphic-section--palmier { max-width: none; padding: 66px max(32px, calc((100vw - 1320px) / 2)) 72px; color: #42633d; background: #eed2c4; font-family: Helvetica, Arial, sans-serif; }
-.graphic-header .paintings-back.is-over-palmier { background: #eed2c4; }
-.graphic-section--palmier .painting-card, .graphic-section--palmier .painting-card__media { background: #eed2c4; }
+.graphic-section--palmier { max-width: none; padding: 66px max(32px, calc((100vw - 1320px) / 2)) 72px; color: #42633d; background: var(--paper); font-family: Helvetica, Arial, sans-serif; }
+.graphic-header .paintings-back.is-over-palmier { background: var(--paper); }
+.graphic-section--palmier .painting-card, .graphic-section--palmier .painting-card__media { background: var(--paper); }
 .graphic-section--palmier .painting-card__title, .graphic-section--palmier .painting-card__description { color: #42633d; font-family: Helvetica, Arial, sans-serif; }
 .graphic-section--palmier .painting-card__tags button { color: #d78b71; font-family: Helvetica, Arial, sans-serif; }
 .graphic-section--palmier .painting-card__tags li { border-color: #d78b71; }

@@ -358,20 +358,6 @@ window.INFINITE_GALLERY_MEDIA = {
       ]
     },
     {
-      "id": "paintings-17",
-      "category": "paintings",
-      "collection": "Paintings",
-      "title": "Lysergic Scrawl",
-      "media": [
-        {
-          "src": "assets/img/paintings/Lysergic Scrawl.png",
-          "type": "image",
-          "width": 1447,
-          "height": 1869
-        }
-      ]
-    },
-    {
       "id": "paintings-18",
       "category": "paintings",
       "collection": "Paintings",
@@ -735,20 +721,36 @@ window.INFINITE_GALLERY_MEDIA = {
       "id": "digital-7",
       "category": "digital",
       "collection": "Digital",
-      "title": "Colouring",
+      "title": "Cat",
       "media": [
         {
           "src": "assets/img/Digital Art HD/Colouring 1.png",
           "type": "image",
           "width": 4167,
           "height": 4167
-        },
+        }
+      ]
+    },
+    {
+      "id": "digital-7-2",
+      "category": "digital",
+      "collection": "Digital",
+      "title": "Monster",
+      "media": [
         {
           "src": "assets/img/Digital Art HD/Colouring 2.png",
           "type": "image",
           "width": 4167,
           "height": 4167
-        },
+        }
+      ]
+    },
+    {
+      "id": "digital-7-3",
+      "category": "digital",
+      "collection": "Digital",
+      "title": "Clown",
+      "media": [
         {
           "src": "assets/img/Digital Art HD/Colouring 3.png",
           "type": "image",
@@ -872,38 +874,6 @@ window.INFINITE_GALLERY_MEDIA = {
           "type": "image",
           "width": 1988,
           "height": 1320
-        }
-      ]
-    },
-    {
-      "id": "digital-16",
-      "category": "digital",
-      "collection": "Digital",
-      "title": "Lysergic Juddering",
-      "media": [
-        {
-          "src": "assets/img/Digital Art HD/Lysergic Juddering 1.png",
-          "type": "image",
-          "width": 17213,
-          "height": 15238
-        },
-        {
-          "src": "assets/img/Digital Art HD/Lysergic Juddering 2.png",
-          "type": "image",
-          "width": 16904,
-          "height": 15268
-        },
-        {
-          "src": "assets/img/Digital Art HD/Lysergic Juddering 3.png",
-          "type": "image",
-          "width": 16186,
-          "height": 15271
-        },
-        {
-          "src": "assets/img/Digital Art HD/Lysergic Juddering 4.png",
-          "type": "image",
-          "width": 17287,
-          "height": 15303
         }
       ]
     },

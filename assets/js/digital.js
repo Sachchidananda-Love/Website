@@ -11,14 +11,14 @@
     'Kalyāṇa-mittatā': ['Apple Keynote'], Adam: ['Apple Keynote'], Exit: ['Apple Keynote'],
     'COVID 19 MASK FIG. 1.': ['Adobe Photoshop'],
     Fibonacci: ['Adobe Illustrator', 'Apple Keynote'], Tao: ['Adobe Illustrator'], Caesarea: ['Adobe Illustrator'],
-    Ubhaya: ['Adobe Illustrator'], Colouring: ['Adobe Illustrator'], 'No tree, it is said': ['Adobe Illustrator'],
+    Ubhaya: ['Adobe Illustrator'], Cat: ['Adobe Illustrator'], Monster: ['Adobe Illustrator'], Clown: ['Adobe Illustrator'], 'No tree, it is said': ['Adobe Illustrator'],
     Anatta: ['Adobe Illustrator'], Eden: ['Adobe Illustrator'], ABIOSES: ['Adobe Illustrator'], Barry: ['Adobe Illustrator'],
     'Gary Barwin Birthday Card 2026': ['Adobe Illustrator'], Citta: ['Adobe Illustrator'], 'COVID 19 Tree': ['Adobe Illustrator']
   };
   const preferredTitles = ['Anatta', 'Barry', 'Citta', 'ABIOSES', 'Caesarea', 'Ubhaya', 'Exit', 'Homage to MF DOOM'];
   const preferredOrder = new Map(preferredTitles.map((title, index) => [title, index]));
   const yearByTitle = {
-    'Kalyāṇa-mittatā': 2018, 'Lysergic Juddering': 2018, Adam: 2019, Exit: 2019,
+    'Kalyāṇa-mittatā': 2018, Adam: 2019, Exit: 2019,
     'COVID 19 MASK FIG. 1.': 2019, 'COVID 19 Tree': 2019, 'Homage to MF DOOM': 2020,
     Fibonacci: 2021, Anatta: 2023, Eden: 2023, ABIOSES: 2024, Barry: 2024, Citta: 2024,
     'Gary Barwin Birthday Card 2026': 2026

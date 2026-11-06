@@ -26,7 +26,6 @@
     'Kalyāṇa-mittatā': { title: 'Kalyāṇa-mittatā', details: '16 × 20 in · Spray paint, ink', tags: ['Spray Paint', 'Ink', 'People', 'Nature', 'Tendrils'] },
     'knust': { title: 'Knust', details: '16 × 20 in · Spray paint, glass, wire', tags: ['Spray Paint', 'Glass', 'People'] },
     'Laya': { details: '18 × 24 in · Spray paint, vinyl', tags: ['Spray Paint', 'Vinyl', 'Nature', 'Abstract'] },
-    'Lysergic Scrawl': { details: '2018 · 15 × 17 cm', description: 'Drawn when on LSD.', tags: ['Psychedelic'] },
     'nāga': { title: 'nāga', details: '8 × 10 in · Spray paint, ink', tags: ['Spray Paint', 'Ink', 'Nature', 'Abstract', 'Tendrils'] },
     'Neither': { details: '16 × 20 in · Spray paint, ink', tags: ['Spray Paint', 'Ink', 'Abstract'] },
     'octagons': { title: 'Octagons', details: '12 × 16 in · Acrylic', tags: ['Acrylic', 'Nature'] },
@@ -37,7 +36,7 @@
     'Sabhāva': { title: 'Sabhāva', details: '28 × 22 × 4 in · Spray paint, glass, wood', tags: ['Spray Paint', 'Glass', 'People'] },
     'Sāṃkhya': { title: 'Sāṃkhya', details: '36 × 48 in', tags: ['Spray Paint', 'Vinyl', 'Abstract'] },
     'Stillhet': { details: '30 × 22 in · Spray paint', tags: ['Spray Paint', 'Nature', 'Abstract'] },
-    'Tathata': { title: 'Tathata', details: '2020 · 20 × 27 cm', description: 'A visual representation of psychedelic experiences induced by nitrous oxide and LSD.', tags: ['Psychedelic'] },
+    'Tathata': { title: 'Tathata', details: '2020 · 20 × 27 cm', tags: [] },
     'Tathā': { title: 'Tathā', details: '20 × 20 in · $320 · Spray paint, ink, vinyl', tags: ['Spray Paint', 'Ink', 'Vinyl', 'People', 'For Sale'] },
     'Taxi Driver': { details: '16 × 20 in · Spray paint', description: 'Taxi Driver.', tags: ['Spray Paint', 'People'] },
     'tupac': { title: 'Tupac', details: '12 × 16 in · Spray paint', description: 'Tupac Shakur.', tags: ['Spray Paint', 'People'] },
@@ -252,7 +251,6 @@
     const metadata = metadataFor(item);
     const fragment = template.content.cloneNode(true);
     const card = fragment.querySelector('.painting-card');
-    if (item.title === 'Lysergic Scrawl') card.classList.add('painting-card--lysergic-scrawl');
     const media = fragment.querySelector('.painting-card__media');
     const previewContainer = fragment.querySelector('.painting-card__preview');
     const navigation = fragment.querySelector('.painting-card__navigation');
@@ -346,7 +344,7 @@
     renderItems(visibleItems);
     updateFilterMenus(selections);
   };
-  const filterGroupForTag = (tag) => ({ 'For Sale': 'availability', 'Spray Paint': 'medium', Ink: 'medium', Vinyl: 'medium', Glass: 'medium', Acrylic: 'medium', People: 'subject', Nature: 'subject', Abstract: 'subject', Tendrils: 'subject', Psychedelic: 'subject' })[tag];
+  const filterGroupForTag = (tag) => ({ 'For Sale': 'availability', 'Spray Paint': 'medium', Ink: 'medium', Vinyl: 'medium', Glass: 'medium', Acrylic: 'medium', People: 'subject', Nature: 'subject', Abstract: 'subject', Tendrils: 'subject' })[tag];
   const selectTag = (tag) => {
     const group = filterGroupForTag(tag);
     if (!group) return;
