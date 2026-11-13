@@ -37,7 +37,7 @@
     'Sāṃkhya': { title: 'Sāṃkhya', details: '36 × 48 in', tags: ['Spray Paint', 'Vinyl', 'Abstract'] },
     'Stillhet': { details: '30 × 22 in · Spray paint', tags: ['Spray Paint', 'Nature', 'Abstract'] },
     'Tathata': { title: 'Tathata', details: '2020 · 20 × 27 cm', tags: [] },
-    'Tathā': { title: 'Tathā', details: '20 × 20 in · $320 · Spray paint, ink, vinyl', tags: ['Spray Paint', 'Ink', 'Vinyl', 'People', 'For Sale'] },
+    'Tathā': { title: 'Tathā', details: '20 × 20 in · $320 · Spray paint, ink, vinyl', tags: ['Spray Paint', 'Ink', 'Vinyl', 'People'] },
     'Taxi Driver': { details: '16 × 20 in · Spray paint', description: 'Taxi Driver.', tags: ['Spray Paint', 'People'] },
     'tupac': { title: 'Tupac', details: '12 × 16 in · Spray paint', description: 'Tupac Shakur.', tags: ['Spray Paint', 'People'] },
     'Painting.720': { title: 'Painting process', details: 'Process video', tags: [] }
